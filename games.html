@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -5,7 +6,53 @@
     <link rel="icon" type="image/png" href="png/logo.png"/>
     <title>Truffled - Games</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .gl{--panel:rgba(22,27,36,.72);--panel-hi:rgba(30,37,50,.95);--line:#262d3b;--text:#e9edf5;--muted:#8b95a8;--accent:#7c9cff;--ease:cubic-bezier(.2,.8,.2,1);
+            max-width:1400px;margin:0 auto;padding:8px 24px 64px;color:var(--text);font-family:'Poppins',system-ui,sans-serif;text-align:left}
+        .gl [hidden]{display:none!important}
+
+        .gl-head{animation:gl-rise .7s var(--ease) backwards}
+        .gl-head h1{margin:0 0 6px;font:700 clamp(2rem,5vw,3rem)/1.1 'Poppins',sans-serif;letter-spacing:-.02em;color:var(--text);text-align:left}
+        .gl-head p{margin:0 0 24px;color:var(--muted);font-size:1rem;text-align:left}
+
+        .gl-search{display:flex;align-items:center;gap:12px;max-width:640px;height:54px;padding:0 16px;border-radius:16px;background:var(--panel);border:1px solid var(--line);
+            backdrop-filter:blur(8px);transition:border-color .2s,box-shadow .3s var(--ease),transform .3s var(--ease);animation:gl-rise .7s .08s var(--ease) backwards}
+        .gl-search:hover{border-color:#37415a}
+        .gl-search:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px rgba(124,156,255,.16),0 12px 40px -8px rgba(124,156,255,.25);transform:translateY(-1px)}
+        .gl-search svg{flex:none;width:20px;height:20px;stroke:var(--muted);transition:stroke .2s}
+        .gl-search:focus-within svg{stroke:var(--accent)}
+        .gl-search input{flex:1;min-width:0;width:auto;height:100%;margin:0;padding:0;border:0;outline:0;box-shadow:none;background:none;color:var(--text);font:500 1rem 'Poppins',sans-serif}
+        .gl-search input::placeholder{color:var(--muted);font-weight:400}
+        .gl-search kbd{flex:none;padding:2px 9px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--muted);font:500 .8rem 'Poppins',sans-serif}
+        .gl-search.has-text kbd,.gl-search:focus-within kbd{display:none}
+        .gl-clear{flex:none;display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:var(--text);font-size:1.1rem;line-height:1;cursor:pointer;transition:background .2s,transform .2s}
+        .gl-clear:hover{background:rgba(255,255,255,.16);transform:rotate(90deg)}
+        .gl-meta{margin:14px 2px 22px;color:var(--muted);font-size:.85rem;min-height:1.3em}
+
+        .gl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:20px}
+        .gl-card{display:block;padding:8px;border-radius:16px;background:var(--panel);border:1px solid var(--line);color:inherit;text-decoration:none;
+            transition:transform .3s var(--ease),border-color .3s,box-shadow .3s,background .3s;animation:gl-rise .6s var(--ease) backwards;animation-delay:calc(.15s + min(var(--i,0),20)*30ms)}
+        .gl-card:hover,.gl-card:focus-visible{transform:translateY(-6px);border-color:rgba(124,156,255,.55);background:var(--panel-hi);box-shadow:0 18px 40px -14px rgba(124,156,255,.4);outline:0}
+        .gl-card:active{transform:translateY(-2px) scale(.98)}
+        .gl-suggest{border-style:dashed}
+        .gl-art{position:relative;display:block;aspect-ratio:1;overflow:hidden;border-radius:11px;background:#1b2130}
+        .gl-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+        .gl-card:hover .gl-art img,.gl-card:focus-visible .gl-art img{transform:scale(1.08)}
+        .gl-play{position:absolute;left:10px;right:10px;bottom:10px;display:flex;align-items:center;justify-content:center;height:36px;border-radius:10px;background:var(--accent);color:#0b1020;font:600 .85rem 'Poppins',sans-serif;
+            opacity:0;transform:translateY(10px);transition:opacity .25s,transform .35s var(--ease)}
+        .gl-card:hover .gl-play,.gl-card:focus-visible .gl-play{opacity:1;transform:none}
+        .gl-card h3{margin:10px 4px 4px;overflow:hidden;color:var(--text);font:600 .9rem/1.3 'Poppins',sans-serif;text-align:left;text-overflow:ellipsis;white-space:nowrap}
+
+        .gl-empty{display:flex;flex-direction:column;align-items:center;gap:10px;padding:64px 0;color:var(--muted);text-align:center;animation:gl-rise .5s var(--ease) backwards}
+        .gl-empty p{margin:0;font-size:1.05rem}
+        .gl-empty a{padding:9px 18px;border-radius:10px;background:var(--accent);color:#0b1020;font-weight:600;text-decoration:none;transition:transform .2s}
+        .gl-empty a:hover{transform:translateY(-2px)}
+
+        @keyframes gl-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+        @media (max-width:520px){.gl{padding:8px 14px 48px}.gl-grid{grid-template-columns:repeat(2,1fr);gap:12px}.gl-search kbd{display:none}}
+        @media (prefers-reduced-motion:reduce){.gl *,.gl *::before{animation:none!important;transition:none!important}}
+    </style>
 </head>
 <body>
     <div id="loading-screen">
@@ -29,476 +76,153 @@
             <a href="settings.html"><img src="png/gear-solid.svg" alt="Settings"></a>
         </div>
     </div>
-<div class="content">
-    <h1>Games</h1>
-    <p>Choose a game to start playing!</p>
-    <div class="index-page">
-        <input type="text" id="gamesearch" class="search-bar" placeholder="Search..." />
 
-    <div class="container">
-        <div class="game-gallery" id="gameGallery">
-            <div class="game" data-name="Game Suggestions">
-                <a href="https://forms.gle/azBWo53JQN8VNzFt5" class="game-link">
-                    <img src="/png/games/forms.png" alt="Game Suggestions" class="game-thumbnail">
-                </a>
-                <h3>Game Suggestions</h3>
-            </div>
-            <div class="game" data-name="Game 1">
-                <a href="games/1" class="game-link">
-                    <img src="png/games/12.png" alt="Game 1" class="game-thumbnail">
-                </a>
-                <h3>1</h3>
-            </div>
-            <div class="game" data-name="1v1.lol">
-                <a href="games/1v1lol" class="game-link">
-                    <img src="png/games/1v1.png" alt="1v1.lol" class="game-thumbnail">
-                </a>
-                <h3>1v1.lol</h3>
-            </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/2048" class="game-link">
-                        <img src="png/games/2048.png" alt="2048" class="game-thumbnail">
-                    </a>
-                    <h3>2048</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/ovo" class="game-link">
-                        <img src="/png/games/ovo.png" alt="OvO" class="game-thumbnail">
-                    </a>
-                    <h3>OvO</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-dgdpaeaoeq.aoo%2Feaoeq%2Fmvm2-0%2C2clrhc%2F" class="game-link">
-                        <img src="/png/games/ovo 2.png" alt="OvO" class="game-thumbnail">
-                    </a>
-                    <h3>OvO 2</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-mctjgcmgs46%2Cgktju%60.ko-gcmgs-hvmn5-oto1dkmgnqimnq%2F" class="game-link">
-                        <img src="/png/games/ovodi.png" alt="ovodi" class="game-thumbnail">
-                    </a>
-                    <h3>OvO Dimensions</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/slope" class="game-link">
-                        <img src="png/games/slope.png" alt="Slope" class="game-thumbnail">
-                    </a>
-                    <h3>Slope</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/retro-bowl" class="game-link">
-                        <img src="png/games/retro-bowl.png" alt="Retro Bowl" class="game-thumbnail">
-                    </a>
-                    <h3>Retro Bowl</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-nmweg%2Clml-%3Flg%5Didp%5Dpcrvngr%3Fsioml" class="game-link">
-                        <img src="/png/games/rbx.png" alt="rbx" class="game-thumbnail">
-                    </a>
-                    <h3>Roblox</h3>
-                </div>
-                <div class="game" data-name="Game 1">
-                    <a href="/static/uv/service/hvtrs8%2F-a%2Fsoanl%2Fwmrndaur.eivhwb%2Cim%2Fdine-" class="game-link">
-                        <img src="png/games/samll.png" alt="aswc" class="game-thumbnail">
-                    </a>
-                    <h3>A Small World Cup</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/sm64" class="game-link">
-                        <img src="png/games/sm64.png" alt="sm64" class="game-thumbnail">
-                    </a>
-                    <h3>SM64</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-ivstiha%7Bskneh%2Cgktju%60.ko-Slou-Pifep3F%2F" class="game-link">
-                        <img src="png/games/snow.png" alt="snow" class="game-thumbnail">
-                    </a>
-                    <h3>Snow Rider 3D</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/soccer-random" class="game-link">
-                        <img src="png/games/soccer.png" alt="soccer-random" class="game-thumbnail">
-                    </a>
-                    <h3>Soccer Random</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/baldis-basics/index.html" class="game-link">
-                        <img src="/games/baldis-basics/splash.png" alt="baldi" class="game-thumbnail">
-                    </a>
-                    <h3>Baldis Basics</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-sjenlqhmci.ko-" class="game-link">
-                        <img src="png/games/shell.png" alt="shell" class="game-thumbnail">
-                    </a>
-                    <h3>Shell Shockers</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/tiny-fishing" class="game-link">
-                        <img src="png/games/tiny.png" alt="tiny" class="game-thumbnail">
-                    </a>
-                    <h3>Tiny Fishing</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/worlds-hardest-game" class="game-link">
-                        <img src="png/games/world.png" alt="world" class="game-thumbnail">
-                    </a>
-                    <h3>Worlds Hardest Game</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/MonkeyMart" class="game-link">
-                        <img src="png/games/monkey.png" alt="monkey" class="game-thumbnail">
-                    </a>
-                    <h3>Monkey Mart</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/idle-breakout" class="game-link">
-                        <img src="png/games/idle.png" alt="idle" class="game-thumbnail">
-                    </a>
-                    <h3>Idle Breakout</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/Rocket-League" class="game-link">
-                        <img src="png/games/rocket.png" alt="rocket" class="game-thumbnail">
-                    </a>
-                    <h3>Rocket League</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/a-dance-of-fire-and-ice" class="game-link">
-                        <img src="png/games/adofai.png" alt="fireice" class="game-thumbnail">
-                    </a>
-                    <h3>ADOFAI</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/basket-random" class="game-link">
-                        <img src="png/games/basket.png" alt="basket" class="game-thumbnail">
-                    </a>
-                    <h3>Basket Random</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/bitlife" class="game-link">
-                        <img src="png/games/bit.png" alt="bit" class="game-thumbnail">
-                    </a>
-                    <h3>Bitlife</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/bloonstd" class="game-link">
-                        <img src="png/games/bloons.png" alt="bloons" class="game-thumbnail">
-                    </a>
-                    <h3>Bloon TD1</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/btd5" class="game-link">
-                        <img src="png/games/bloons5.png" alt="bloons5" class="game-thumbnail">
-                    </a>
-                    <h3>Bloons TD5</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/cookie-clicker" class="game-link">
-                        <img src="png/games/cookie.png" alt="cookie" class="game-thumbnail">
-                    </a>
-                    <h3>Cookie Clicker</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/eggycar" class="game-link">
-                        <img src="png/games/eggy-car.png" alt="egg" class="game-thumbnail">
-                    </a>
-                    <h3>Eggy Car</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/fnaf/" class="game-link">
-                        <img src="png/games/splash.jpg" alt="fnaf" class="game-thumbnail">
-                    </a>
-                    <h3>FNAF</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/ducklife1/" class="game-link">
-                        <img src="png/games/ducklife.png" alt="dl1" class="game-thumbnail">
-                    </a>
-                    <h3>Duck Life 1</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/rbcollege" class="game-link">
-                        <img src="png/games/rbc.png" alt="rbc" class="game-thumbnail">
-                    </a>
-                    <h3>Retro Bowl College</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/csgo-clicker" class="game-link">
-                        <img src="png/games/csgo.png" alt="cs" class="game-thumbnail">
-                    </a>
-                    <h3>Csgo Clicker</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/death-run-3d" class="game-link">
-                        <img src="png/games/death.png" alt="death" class="game-thumbnail">
-                    </a>
-                    <h3>Death Run 3D</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/drift-boss" class="game-link">
-                        <img src="png/games/drift.png" alt="boss" class="game-thumbnail">
-                    </a>
-                    <h3>Drift Boss</h3>
-                </div> 
-                <div class="game" data-name="gameGallery">
-                    <a href="games/drive-mad" class="game-link">
-                        <img src="png/games/drive.png" alt="drive" class="game-thumbnail">
-                    </a>
-                    <h3>Drive Mad</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/minecraft-15" class="game-link">
-                        <img src="png/games/mine15.png" alt="mine" class="game-thumbnail">
-                    </a>
-                    <h3>Minecraft 1.5</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/learntofly" class="game-link">
-                        <img src="png/games/learn.png" alt="fly" class="game-thumbnail">
-                    </a>
-                    <h3>Learn To Fly</h3>
-                </div> 
-                <div class="game" data-name="gameGallery">
-                    <a href="games/minecraft-18" class="game-link">
-                        <img src="png/games/mine18.png" alt="mine" class="game-thumbnail">
-                    </a>
-                    <h3>Minecraft 1.8</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/run" class="game-link">
-                        <img src="png/games/run.png" alt="run" class="game-thumbnail">
-                    </a>
-                    <h3>Run</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-soaqhiaptq.ko-" class="game-link">
-                        <img src="png/games/smash.png" alt="kart" class="game-thumbnail">
-                    </a>
-                    <h3>Smash karts</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/drift-hunters" class="game-link">
-                        <img src="png/games/hunt.png" alt="hunt" class="game-thumbnail">
-                    </a>
-                    <h3>Drift hunter</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/osu!" class="game-link">
-                        <img src="/png/games/osu!.png" alt="molklify" class="game-thumbnail">
-                    </a>
-                    <h3>Osu!</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/stickman-hook" class="game-link">
-                        <img src="png/games/stickman.png" alt="hook" class="game-thumbnail">
-                    </a>
-                    <h3>Stickman Hook</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/riddleschool" class="game-link">
-                        <img src="png/games/riddle.png" alt="r" class="game-thumbnail">
-                    </a>
-                    <h3>Riddle School</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-bnoak%2Fbnaqt%2Cim%2Feaoe-bnoak%2Fbnaqt-" class="game-link">
-                        <img src="png/games/bb.png" alt="bb" class="game-thumbnail">
-                    </a>
-                    <h3>Block Blast</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-gcmgs%2Fcfn%2Csxv%7B.ws%2Cke%2Frrmjgcvs-cvr-" class="game-link">
-                        <img src="png/games/ctr.png" alt="ctr" class="game-thumbnail">
-                    </a>
-                    <h3>Cut The Rope</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="games/subway-surfers/" class="game-link">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfyjATFe7Qg15j5x1YktUbABxgr6BlbKXKECbj6KH2QzbgKqzw" alt="sub" class="game-thumbnail">
-                    </a>
-                    <h3>Subway Surfers</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-arp%2F370382.eaoeq.q3%2Cycnfez.lev%2F1521%3A0-oqpisvu60c8pttgaah1h61pukvlnxpg3%2Fknfez.jtol%3Dcnif%3D6466197%26cmr%3Bi52if%3D'7A%26cmr%3Beaf_qowrae%3F1%24aop9sfk%3F%250Fqdi%250F%5D%250Ft2%2C6195cf82c4dg64c2347f.hs!opieil%3Djtvpq%251A'2D%250Frlcyjor.aoo%26cmr%3Bcpr-kd%3F370382%26cmr%3Bfetiae%2Ft%7Bpg%3Dfeqkvor" class="game-link">
-                        <img src="https://play-lh.googleusercontent.com/45HfPjWkdT8k1Y-1kb2ce9dtU4cIq4PXZGPSOQDBHRO_sBWG7Fu9mKKsk9WylHW1Lg=w240-h480-rw" alt="t&b" class="game-thumbnail">
-                    </a>
-                    <h3>Thorns & Balloons</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-pna%7B.eedopcgnmw%2Ccmm-mcln%2F!%2Ffegpnilk%3Dgcmg-kd%3F44bda%6004-f844%2F445f-%3Be76%2F2f9g47cfeg0c%26cmr%251Bnalg%3Fel_WS%24aop'3%40aqsgt%2Fif%3D21%5D00a47c14-c559%2F4cff-%606d6%2F5f862d0g5382#/loginwall" class="game-link">
-                        <img src="png/games/fort.png" alt="sub" class="game-thumbnail">
-                    </a>
-                    <h3>Fortnite</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/gta3/" class="game-link">
-                        <img src="/png/games/gta3.png" alt="gta3" class="game-thumbnail">
-                    </a>
-                    <h3>GTA3</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/funmayhem/" class="game-link">
-                        <img src="/games/funmayhem/icon.png" alt="fun" class="game-thumbnail">
-                    </a>
-                    <h3>Gun mayhem</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/jetpackjoyride/" class="game-link">
-                        <img src="/games/jetpackjoyride/logo.jpeg" alt="jet" class="game-thumbnail">
-                    </a>
-                    <h3>Jetpack Joyride</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/pizzatower/" class="game-link">
-                        <img src="/games/pizzatower/pz.png" alt="pizza" class="game-thumbnail">
-                    </a>
-                    <h3>Pizza tower</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/superhot/" class="game-link">
-                        <img src="/games/superhot/icon.png" alt="hot" class="game-thumbnail">
-                    </a>
-                    <h3>Super hot</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/tetris/" class="game-link">
-                        <img src="/games/tetris/icon.png" alt="tetris" class="game-thumbnail">
-                    </a>
-                    <h3>Tetris</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/theimpossiblequiz/" class="game-link">
-                        <img src="/games/theimpossiblequiz/quiz.png" alt="quiz" class="game-thumbnail">
-                    </a>
-                    <h3>The impossible quiz</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/tombofthemask/index.html" class="game-link">
-                        <img src="/games/tombofthemask/cover.svg" alt="mask" class="game-thumbnail">
-                    </a>
-                    <h3>Tomb Of The Mask</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/vex/" class="game-link">
-                        <img src="/games/vex/icon.png" alt="vex" class="game-thumbnail">
-                    </a>
-                    <h3>Vex</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/watermelongame/" class="game-link">
-                        <img src="/games/watermelongame/melon.png" alt="melon" class="game-thumbnail">
-                    </a>
-                    <h3>Watermelon Game</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/n-gon/" class="game-link">
-                        <img src="/games/n-gon/bot.png" alt="gon" class="game-thumbnail">
-                    </a>
-                    <h3>n-gon</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/getaway-shootout/" class="game-link">
-                        <img src="/games/getaway-shootout/img/index.jpg" alt="out" class="game-thumbnail">
-                    </a>
-                    <h3>Getaway Shootout</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/fruitninja/" class="game-link">
-                        <img src="/games/fruitninja/FruitNinjaTeaser.jpg" alt="lowtaper" class="game-thumbnail">
-                    </a>
-                    <h3>Fruit Ninja</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/learntofly2/" class="game-link">
-                        <img src="/games/learntofly2/learn-to-fly-2.jpg" alt="ltf2" class="game-thumbnail">
-                    </a>
-                    <h3>Learn To Fly 2</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/ltf3/" class="game-link">
-                        <img src="/games/ltf3/logo.png" alt="ltf3" class="game-thumbnail">
-                    </a>
-                    <h3>Learn To Fly 3</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="" class="game-link">
-                        <img src="/games/motox3m/splash.jpg" alt="moto" class="game-thumbnail">
-                    </a>
-                    <h3>Moto X3M</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/paperio2/ class="game-link">
-                        <img src="/games/paperio2/paper.png" alt="paper" class="game-thumbnail">
-                    </a>
-                    <h3>Paperio 2</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/games/pixel-gun-survival/" class="game-link">
-                        <img src="/games/pixel-gun-survival/512x512.png" alt="pix" class="game-thumbnail">
-                    </a>
-                    <h3>Pixel Gun 3D</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-ilfknktg-arcfv.mre%2F" class="game-link">
-                        <img src="/png/games/inf.png" alt="inf" class="game-thumbnail">
-                    </a>
-                    <h3>Infinite Craft</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-fpoeigscraafe%2Cwkn-cmmrinef%2F%60uakqhmt%2Frmunevtg%2F" class="game-link">
-                        <img src="/png/games/buck.png" alt="buck" class="game-thumbnail">
-                    </a>
-                    <h3>Buckshot Roulette</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-sxv%7B.non%2F-eounavopjq%2Fmcxendc%2Fknfez.jtol" class="game-link">
-                        <img src="/png/games/zelda.png" alt="zelda" class="game-thumbnail">
-                    </a>
-                    <h3>Zelda</h3>
-                </div>
-                <div class="game" data-name="gameGallery">
-                    <a href="/static/uv/service/hvtrs8%2F-rganl%7Bcmonmctjaldnecrlilgdopkkdqaldqtwfd-wk%2Cvgraen.cpr%2Feaoeq%2Fraraqpkzxapic%2Fknfez.jtol" class="game-link">
-                        <img src="/png/games/pizza.png" alt="zelda" class="game-thumbnail">
-                    </a>
-                    <h3>Papas Pizzaeria</h3>
-                </div>                             
-            </div>
-        </div>
+<div class="content">
+  <main class="gl">
+    <header class="gl-head">
+        <h1>Games</h1>
+        <p>Choose a game to start playing!</p>
+    </header>
+
+    <div class="gl-search" id="gl-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="text" id="gamesearch" placeholder="Search games" autocomplete="off" spellcheck="false" aria-label="Search games">
+        <kbd>/</kbd>
+        <button type="button" class="gl-clear" id="gl-clear" aria-label="Clear search" hidden>&times;</button>
     </div>
+    <p class="gl-meta" id="gl-count" aria-live="polite"></p>
+
+    <div class="gl-grid" id="gameGallery">
+        <a class="gl-card gl-suggest" href="https://forms.gle/azBWo53JQN8VNzFt5" target="_blank" rel="noopener" style="--i:0"><span class="gl-art"><img src="/png/games/forms.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Suggest</span></span><h3>Game Suggestions</h3></a>
+        <a class="gl-card" href="games/1" style="--i:1"><span class="gl-art"><img src="png/games/12.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>1</h3></a>
+        <a class="gl-card" href="games/1v1lol" style="--i:2"><span class="gl-art"><img src="png/games/1v1.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>1v1.lol</h3></a>
+        <a class="gl-card" href="games/2048" style="--i:3"><span class="gl-art"><img src="png/games/2048.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>2048</h3></a>
+        <a class="gl-card" href="games/ovo" style="--i:4"><span class="gl-art"><img src="/png/games/ovo.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>OvO</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-dgdpaeaoeq.aoo%2Feaoeq%2Fmvm2-0%2C2clrhc%2F" style="--i:5"><span class="gl-art"><img src="/png/games/ovo 2.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>OvO 2</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-mctjgcmgs46%2Cgktju%60.ko-gcmgs-hvmn5-oto1dkmgnqimnq%2F" style="--i:6"><span class="gl-art"><img src="/png/games/ovodi.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>OvO Dimensions</h3></a>
+        <a class="gl-card" href="games/slope" style="--i:7"><span class="gl-art"><img src="png/games/slope.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Slope</h3></a>
+        <a class="gl-card" href="games/retro-bowl" style="--i:8"><span class="gl-art"><img src="png/games/retro-bowl.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Retro Bowl</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-nmweg%2Clml-%3Flg%5Didp%5Dpcrvngr%3Fsioml" style="--i:9"><span class="gl-art"><img src="/png/games/rbx.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Roblox</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-a%2Fsoanl%2Fwmrndaur.eivhwb%2Cim%2Fdine-" style="--i:10"><span class="gl-art"><img src="png/games/samll.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>A Small World Cup</h3></a>
+        <a class="gl-card" href="games/sm64" style="--i:11"><span class="gl-art"><img src="png/games/sm64.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>SM64</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-ivstiha%7Bskneh%2Cgktju%60.ko-Slou-Pifep3F%2F" style="--i:12"><span class="gl-art"><img src="png/games/snow.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Snow Rider 3D</h3></a>
+        <a class="gl-card" href="games/soccer-random" style="--i:13"><span class="gl-art"><img src="png/games/soccer.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Soccer Random</h3></a>
+        <a class="gl-card" href="/games/baldis-basics/index.html" style="--i:14"><span class="gl-art"><img src="/games/baldis-basics/splash.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Baldis Basics</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-sjenlqhmci.ko-" style="--i:15"><span class="gl-art"><img src="png/games/shell.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Shell Shockers</h3></a>
+        <a class="gl-card" href="games/tiny-fishing" style="--i:16"><span class="gl-art"><img src="png/games/tiny.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Tiny Fishing</h3></a>
+        <a class="gl-card" href="games/worlds-hardest-game" style="--i:17"><span class="gl-art"><img src="png/games/world.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Worlds Hardest Game</h3></a>
+        <a class="gl-card" href="games/MonkeyMart" style="--i:18"><span class="gl-art"><img src="png/games/monkey.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Monkey Mart</h3></a>
+        <a class="gl-card" href="games/idle-breakout" style="--i:19"><span class="gl-art"><img src="png/games/idle.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Idle Breakout</h3></a>
+        <a class="gl-card" href="games/Rocket-League" style="--i:20"><span class="gl-art"><img src="png/games/rocket.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Rocket League</h3></a>
+        <a class="gl-card" href="games/a-dance-of-fire-and-ice" style="--i:21"><span class="gl-art"><img src="png/games/adofai.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>ADOFAI</h3></a>
+        <a class="gl-card" href="games/basket-random" style="--i:22"><span class="gl-art"><img src="png/games/basket.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Basket Random</h3></a>
+        <a class="gl-card" href="games/bitlife" style="--i:23"><span class="gl-art"><img src="png/games/bit.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Bitlife</h3></a>
+        <a class="gl-card" href="games/bloonstd" style="--i:24"><span class="gl-art"><img src="png/games/bloons.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Bloon TD1</h3></a>
+        <a class="gl-card" href="games/btd5" style="--i:25"><span class="gl-art"><img src="png/games/bloons5.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Bloons TD5</h3></a>
+        <a class="gl-card" href="games/cookie-clicker" style="--i:26"><span class="gl-art"><img src="png/games/cookie.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Cookie Clicker</h3></a>
+        <a class="gl-card" href="games/eggycar" style="--i:27"><span class="gl-art"><img src="png/games/eggy-car.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Eggy Car</h3></a>
+        <a class="gl-card" href="games/fnaf/" style="--i:28"><span class="gl-art"><img src="png/games/splash.jpg" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>FNAF</h3></a>
+        <a class="gl-card" href="games/ducklife1/" style="--i:29"><span class="gl-art"><img src="png/games/ducklife.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Duck Life 1</h3></a>
+        <a class="gl-card" href="games/rbcollege" style="--i:30"><span class="gl-art"><img src="png/games/rbc.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Retro Bowl College</h3></a>
+        <a class="gl-card" href="games/csgo-clicker" style="--i:31"><span class="gl-art"><img src="png/games/csgo.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Csgo Clicker</h3></a>
+        <a class="gl-card" href="games/death-run-3d" style="--i:32"><span class="gl-art"><img src="png/games/death.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Death Run 3D</h3></a>
+        <a class="gl-card" href="games/drift-boss" style="--i:33"><span class="gl-art"><img src="png/games/drift.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Drift Boss</h3></a>
+        <a class="gl-card" href="games/drive-mad" style="--i:34"><span class="gl-art"><img src="png/games/drive.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Drive Mad</h3></a>
+        <a class="gl-card" href="games/minecraft-15" style="--i:35"><span class="gl-art"><img src="png/games/mine15.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Minecraft 1.5</h3></a>
+        <a class="gl-card" href="games/learntofly" style="--i:36"><span class="gl-art"><img src="png/games/learn.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Learn To Fly</h3></a>
+        <a class="gl-card" href="games/minecraft-18" style="--i:37"><span class="gl-art"><img src="png/games/mine18.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Minecraft 1.8</h3></a>
+        <a class="gl-card" href="games/run" style="--i:38"><span class="gl-art"><img src="png/games/run.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Run</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-soaqhiaptq.ko-" style="--i:39"><span class="gl-art"><img src="png/games/smash.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Smash karts</h3></a>
+        <a class="gl-card" href="games/drift-hunters" style="--i:40"><span class="gl-art"><img src="png/games/hunt.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Drift hunter</h3></a>
+        <a class="gl-card" href="games/osu!" style="--i:41"><span class="gl-art"><img src="/png/games/osu!.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Osu!</h3></a>
+        <a class="gl-card" href="games/stickman-hook" style="--i:42"><span class="gl-art"><img src="png/games/stickman.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Stickman Hook</h3></a>
+        <a class="gl-card" href="games/riddleschool" style="--i:43"><span class="gl-art"><img src="png/games/riddle.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Riddle School</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-bnoak%2Fbnaqt%2Cim%2Feaoe-bnoak%2Fbnaqt-" style="--i:44"><span class="gl-art"><img src="png/games/bb.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Block Blast</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-gcmgs%2Fcfn%2Csxv%7B.ws%2Cke%2Frrmjgcvs-cvr-" style="--i:45"><span class="gl-art"><img src="png/games/ctr.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Cut The Rope</h3></a>
+        <a class="gl-card" href="games/subway-surfers/" style="--i:46"><span class="gl-art"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfyjATFe7Qg15j5x1YktUbABxgr6BlbKXKECbj6KH2QzbgKqzw" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Subway Surfers</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-arp%2F370382.eaoeq.q3%2Cycnfez.lev%2F1521%3A0-oqpisvu60c8pttgaah1h61pukvlnxpg3%2Fknfez.jtol%3Dcnif%3D6466197%26cmr%3Bi52if%3D'7A%26cmr%3Beaf_qowrae%3F1%24aop9sfk%3F%250Fqdi%250F%5D%250Ft2%2C6195cf82c4dg64c2347f.hs!opieil%3Djtvpq%251A'2D%250Frlcyjor.aoo%26cmr%3Bcpr-kd%3F370382%26cmr%3Bfetiae%2Ft%7Bpg%3Dfeqkvor" style="--i:47"><span class="gl-art"><img src="https://play-lh.googleusercontent.com/45HfPjWkdT8k1Y-1kb2ce9dtU4cIq4PXZGPSOQDBHRO_sBWG7Fu9mKKsk9WylHW1Lg=w240-h480-rw" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Thorns &amp; Balloons</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-pna%7B.eedopcgnmw%2Ccmm-mcln%2F!%2Ffegpnilk%3Dgcmg-kd%3F44bda%6004-f844%2F445f-%3Be76%2F2f9g47cfeg0c%26cmr%251Bnalg%3Fel_WS%24aop'3%40aqsgt%2Fif%3D21%5D00a47c14-c559%2F4cff-%606d6%2F5f862d0g5382#/loginwall" style="--i:48"><span class="gl-art"><img src="png/games/fort.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Fortnite</h3></a>
+        <a class="gl-card" href="/games/gta3/" style="--i:49"><span class="gl-art"><img src="/png/games/gta3.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>GTA3</h3></a>
+        <a class="gl-card" href="/games/funmayhem/" style="--i:50"><span class="gl-art"><img src="/games/funmayhem/icon.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Gun mayhem</h3></a>
+        <a class="gl-card" href="/games/jetpackjoyride/" style="--i:51"><span class="gl-art"><img src="/games/jetpackjoyride/logo.jpeg" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Jetpack Joyride</h3></a>
+        <a class="gl-card" href="/games/pizzatower/" style="--i:52"><span class="gl-art"><img src="/games/pizzatower/pz.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Pizza tower</h3></a>
+        <a class="gl-card" href="/games/superhot/" style="--i:53"><span class="gl-art"><img src="/games/superhot/icon.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Super hot</h3></a>
+        <a class="gl-card" href="/games/tetris/" style="--i:54"><span class="gl-art"><img src="/games/tetris/icon.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Tetris</h3></a>
+        <a class="gl-card" href="/games/theimpossiblequiz/" style="--i:55"><span class="gl-art"><img src="/games/theimpossiblequiz/quiz.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>The impossible quiz</h3></a>
+        <a class="gl-card" href="/games/tombofthemask/index.html" style="--i:56"><span class="gl-art"><img src="/games/tombofthemask/cover.svg" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Tomb Of The Mask</h3></a>
+        <a class="gl-card" href="/games/vex/" style="--i:57"><span class="gl-art"><img src="/games/vex/icon.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Vex</h3></a>
+        <a class="gl-card" href="/games/watermelongame/" style="--i:58"><span class="gl-art"><img src="/games/watermelongame/melon.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Watermelon Game</h3></a>
+        <a class="gl-card" href="/games/n-gon/" style="--i:59"><span class="gl-art"><img src="/games/n-gon/bot.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>n-gon</h3></a>
+        <a class="gl-card" href="/games/getaway-shootout/" style="--i:60"><span class="gl-art"><img src="/games/getaway-shootout/img/index.jpg" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Getaway Shootout</h3></a>
+        <a class="gl-card" href="/games/fruitninja/" style="--i:61"><span class="gl-art"><img src="/games/fruitninja/FruitNinjaTeaser.jpg" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Fruit Ninja</h3></a>
+        <a class="gl-card" href="/games/learntofly2/" style="--i:62"><span class="gl-art"><img src="/games/learntofly2/learn-to-fly-2.jpg" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Learn To Fly 2</h3></a>
+        <a class="gl-card" href="/games/ltf3/" style="--i:63"><span class="gl-art"><img src="/games/ltf3/logo.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Learn To Fly 3</h3></a>
+        <a class="gl-card" href="/games/motox3m/" style="--i:64"><span class="gl-art"><img src="/games/motox3m/splash.jpg" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Moto X3M</h3></a>
+        <a class="gl-card" href="/games/paperio2/" style="--i:65"><span class="gl-art"><img src="/games/paperio2/paper.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Paperio 2</h3></a>
+        <a class="gl-card" href="/games/pixel-gun-survival/" style="--i:66"><span class="gl-art"><img src="/games/pixel-gun-survival/512x512.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Pixel Gun 3D</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-ilfknktg-arcfv.mre%2F" style="--i:67"><span class="gl-art"><img src="/png/games/inf.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Infinite Craft</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-fpoeigscraafe%2Cwkn-cmmrinef%2F%60uakqhmt%2Frmunevtg%2F" style="--i:68"><span class="gl-art"><img src="/png/games/buck.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Buckshot Roulette</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-sxv%7B.non%2F-eounavopjq%2Fmcxendc%2Fknfez.jtol" style="--i:69"><span class="gl-art"><img src="/png/games/zelda.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Zelda</h3></a>
+        <a class="gl-card" href="/static/uv/service/hvtrs8%2F-rganl%7Bcmonmctjaldnecrlilgdopkkdqaldqtwfd-wk%2Cvgraen.cpr%2Feaoeq%2Fraraqpkzxapic%2Fknfez.jtol" style="--i:70"><span class="gl-art"><img src="/png/games/pizza.png" alt="" loading="lazy" decoding="async"><span class="gl-play">Play</span></span><h3>Papas Pizzaeria</h3></a>
+    </div>
+
+    <div class="gl-empty" id="gl-empty" hidden>
+        <p>No games match &ldquo;<span id="gl-term"></span>&rdquo;.</p>
+        <a href="https://forms.gle/azBWo53JQN8VNzFt5" target="_blank" rel="noopener">Suggest this game</a>
+    </div>
+  </main>
+</div>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLTG1S4STB"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-function searchGames() {
-var txt = $("#gamesearch").val();
-if (txt === "") {
-    $(".game").show(); 
-} else {
-    $(".game").hide(); 
-    $(".game").each(function () {
-        if ($(this).text().toUpperCase().indexOf(txt.toUpperCase()) !== -1 || $(this).data('id') === parseInt(txt)) {
-            $(this).show(); 
-        }
+(function () {
+    var input = document.getElementById('gamesearch'),
+        box = document.getElementById('gl-search'),
+        clear = document.getElementById('gl-clear'),
+        count = document.getElementById('gl-count'),
+        empty = document.getElementById('gl-empty'),
+        term = document.getElementById('gl-term'),
+        grid = document.getElementById('gameGallery'),
+        cards = Array.prototype.slice.call(grid.children),
+        names = cards.map(function (c) { return c.querySelector('h3').textContent.toLowerCase(); });
+
+    function searchGames() {
+        var q = input.value.trim().toLowerCase(), shown = 0, fresh = [];
+        cards.forEach(function (c, i) {
+            var show = !q || names[i].indexOf(q) !== -1, was = c.hidden;
+            c.hidden = !show;
+            if (show) {
+                if (was && q !== undefined && count.dataset.ready) { c.style.setProperty('--i', fresh.length); c.style.animation = 'none'; fresh.push(c); }
+                shown++;
+            }
+        });
+        void grid.offsetWidth;
+        fresh.forEach(function (c) { c.style.animation = ''; });
+        count.dataset.ready = '1';
+        box.classList.toggle('has-text', !!input.value);
+        clear.hidden = !input.value;
+        empty.hidden = shown > 0;
+        term.textContent = input.value.trim();
+        count.textContent = q ? shown + ' of ' + cards.length + ' games' : cards.length + ' games';
+    }
+
+    input.addEventListener('input', searchGames);
+    clear.addEventListener('click', function () { input.value = ''; searchGames(); input.focus(); });
+    input.addEventListener('keydown', function (e) { if (e.key === 'Escape') { input.value = ''; searchGames(); } });
+    document.addEventListener('keydown', function (e) {
+        var t = (e.target.tagName || '').toLowerCase();
+        if (e.key === '/' && t !== 'input' && t !== 'textarea' && !e.ctrlKey && !e.metaKey) { e.preventDefault(); input.focus(); }
     });
-}
-}
 
-document.addEventListener("DOMContentLoaded", () => {
-let urlParams = new URLSearchParams(window.location.search);
-let q = urlParams.get("q");
-if (q) {
-    document.getElementById("gamesearch").value = q;
+    var params = new URLSearchParams(window.location.search), q = params.get('q');
+    if (q) {
+        input.value = q;
+        window.history.replaceState({}, document.title, location.pathname);
+    }
     searchGames();
-    urlParams.delete("q");
-    window.history.replaceState({}, document.title, location.pathname);
-}
-document.getElementById("gamesearch").addEventListener("input", () => {
-    searchGames();  
-});
-});
-
+})();
 </script>
-</body>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
