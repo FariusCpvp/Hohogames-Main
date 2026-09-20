@@ -3,70 +3,944 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="png/logo.png"/>
+
+    <link rel="icon" type="image/png" href="png/logo.png">
     <title>Farius Settings</title>
-    <link rel="stylesheet" href="style.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        .fs{--panel:rgba(22,27,36,.72);--line:#262d3b;--text:#e9edf5;--muted:#8b95a8;--accent:#7c9cff;--ease:cubic-bezier(.2,.8,.2,1);
-            max-width:760px;margin:0 auto;padding:8px 24px 80px;color:var(--text);font-family:'Poppins',system-ui,sans-serif;text-align:left}
-        .fs [hidden]{display:none!important}
-        .fs-head{animation:fs-rise .7s var(--ease) backwards}
-        .fs-head h1{margin:0 0 6px;font:700 clamp(2rem,5vw,3rem)/1.1 'Poppins',sans-serif;letter-spacing:-.02em;color:var(--text);text-align:left}
-        .fs-head p{margin:0 0 26px;color:var(--muted);text-align:left}
+        :root {
+            --blue: #5f8cff;
+            --blue-light: #8fb0ff;
+            --blue-soft: rgba(95, 140, 255, .16);
+            --bg: #050913;
+            --panel: rgba(8, 14, 28, .78);
+            --panel-2: rgba(12, 20, 38, .82);
+            --border: rgba(143, 176, 255, .16);
+            --border-hover: rgba(143, 176, 255, .4);
+            --text: #f4f7ff;
+            --muted: #9ba8c2;
+            --danger: #ff8585;
+            --ease: cubic-bezier(.2, .8, .2, 1);
+        }
 
-        .fs-card{margin-bottom:18px;padding:22px 22px 8px;border-radius:18px;background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(8px);
-            animation:fs-rise .65s var(--ease) backwards;animation-delay:calc(.1s + var(--i)*90ms);transition:border-color .3s}
-        .fs-card:hover{border-color:#37415a}
-        .fs-card h2{margin:0 0 4px;color:var(--text);font:600 1.15rem 'Poppins',sans-serif;text-align:left}
-        .fs-card>p{margin:0 0 16px;color:var(--muted);font-size:.9rem;text-align:left}
-        .fs-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;border-top:1px solid var(--line)}
-        .fs-stack{flex-direction:column;align-items:stretch;gap:12px}
-        .fs-txt b{display:block;font-weight:600;font-size:.95rem}
-        .fs-txt small{color:var(--muted);font-size:.82rem;line-height:1.4}
-        .fs-field{display:flex;gap:10px}
-        .fs-err{color:#ff8a8a;font-size:.82rem;min-height:0}
-        .fs-err:empty{display:none}
+        * {
+            box-sizing: border-box;
+        }
 
-        .fs input[type=text]{flex:1;min-width:0;width:100%;height:46px;margin:0;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);
-            font:500 .95rem 'Poppins',sans-serif;outline:0;box-shadow:none;transition:border-color .2s,box-shadow .3s var(--ease)}
-        .fs input[type=text]::placeholder{color:var(--muted);font-weight:400}
-        .fs input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(124,156,255,.16)}
-        .fs input.bad{border-color:#ff8a8a}
-        .fs-btn{flex:none;height:46px;padding:0 18px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);font:600 .9rem 'Poppins',sans-serif;cursor:pointer;
-            transition:transform .25s var(--ease),border-color .2s,background .2s}
-        .fs-btn:hover{transform:translateY(-2px);border-color:var(--accent);background:rgba(124,156,255,.14)}
-        .fs-btn:active{transform:scale(.97)}
-        .fs-btn.danger:hover{border-color:#ff8a8a;background:rgba(255,138,138,.14)}
+        html {
+            min-height: 100%;
+            scroll-behavior: smooth;
+        }
 
-        .fs-key{flex:none;min-width:72px;height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--accent);background:rgba(124,156,255,.14);color:var(--text);font:600 1rem 'Poppins',sans-serif;cursor:pointer;transition:transform .25s var(--ease)}
-        .fs-key:hover{transform:translateY(-2px)}
-        .fs-key.cap{animation:fs-pulse 1s ease-in-out infinite}
-        .fs-chips{display:flex;flex-wrap:wrap;gap:8px}
-        .fs-chip{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);
-            font:500 .85rem 'Poppins',sans-serif;cursor:pointer;transition:transform .25s var(--ease),border-color .2s,background .2s}
-        .fs-chip img{width:18px;height:18px;border-radius:4px}
-        .fs-chip:hover{transform:translateY(-2px);border-color:#4a5675}
-        .fs-chip.on{border-color:var(--accent);background:rgba(124,156,255,.18)}
-        .fs-custom{display:grid;grid-template-columns:1fr 1fr;gap:10px;animation:fs-rise .4s var(--ease) backwards}
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            font-family: "Poppins", system-ui, sans-serif;
+            background:
+                linear-gradient(rgba(3, 7, 16, .76), rgba(3, 7, 16, .9)),
+                url("background.png") center / cover fixed no-repeat;
+            overflow-x: hidden;
+        }
 
-        .fs-switch{appearance:none;-webkit-appearance:none;flex:none;position:relative;width:46px;height:26px;margin:0;padding:0;border:0;border-radius:99px;background:#2a3244;cursor:pointer;transition:background .25s}
-        .fs-switch::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .3s var(--ease)}
-        .fs-switch:checked{background:var(--accent)}
-        .fs-switch:checked::after{transform:translateX(20px)}
-        .fs button:focus-visible,.fs .fs-switch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -2;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(75, 120, 255, .12), transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(70, 120, 255, .08), transparent 35%);
+        }
 
-        .fs-toast{position:fixed;left:50%;bottom:28px;z-index:9999;padding:10px 18px;border-radius:12px;background:#1d2434;border:1px solid var(--accent);color:#e9edf5;font:500 .88rem 'Poppins',sans-serif;
-            opacity:0;pointer-events:none;transform:translate(-50%,20px);transition:opacity .25s,transform .35s var(--ease)}
-        .fs-toast.show{opacity:1;transform:translate(-50%,0)}
+        /* =========================
+           PARTICLES
+        ========================= */
 
-        @keyframes fs-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-        @keyframes fs-pulse{50%{box-shadow:0 0 0 6px rgba(124,156,255,.25)}}
-        @media (max-width:560px){.fs{padding:8px 14px 64px}.fs-custom{grid-template-columns:1fr}}
-        @media (prefers-reduced-motion:reduce){.fs *,.fs-toast{animation:none!important;transition:none!important}}
+        .particles {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: white;
+            opacity: .35;
+            box-shadow: 0 0 8px rgba(255,255,255,.65);
+            animation: floatParticle linear infinite;
+        }
+
+        .particle:nth-child(1)  { left: 4%;  top: 78%; animation-duration: 18s; }
+        .particle:nth-child(2)  { left: 9%;  top: 25%; animation-duration: 23s; animation-delay: -5s; }
+        .particle:nth-child(3)  { left: 14%; top: 65%; animation-duration: 20s; animation-delay: -8s; }
+        .particle:nth-child(4)  { left: 19%; top: 42%; animation-duration: 25s; animation-delay: -3s; }
+        .particle:nth-child(5)  { left: 24%; top: 85%; animation-duration: 19s; animation-delay: -10s; }
+        .particle:nth-child(6)  { left: 29%; top: 18%; animation-duration: 22s; animation-delay: -6s; }
+        .particle:nth-child(7)  { left: 34%; top: 57%; animation-duration: 24s; animation-delay: -12s; }
+        .particle:nth-child(8)  { left: 39%; top: 32%; animation-duration: 21s; animation-delay: -4s; }
+        .particle:nth-child(9)  { left: 44%; top: 73%; animation-duration: 27s; animation-delay: -9s; }
+        .particle:nth-child(10) { left: 49%; top: 12%; animation-duration: 20s; animation-delay: -7s; }
+        .particle:nth-child(11) { left: 54%; top: 48%; animation-duration: 23s; animation-delay: -11s; }
+        .particle:nth-child(12) { left: 59%; top: 88%; animation-duration: 26s; animation-delay: -2s; }
+        .particle:nth-child(13) { left: 64%; top: 27%; animation-duration: 18s; animation-delay: -13s; }
+        .particle:nth-child(14) { left: 69%; top: 61%; animation-duration: 25s; animation-delay: -5s; }
+        .particle:nth-child(15) { left: 74%; top: 36%; animation-duration: 22s; animation-delay: -8s; }
+        .particle:nth-child(16) { left: 79%; top: 80%; animation-duration: 24s; animation-delay: -14s; }
+        .particle:nth-child(17) { left: 84%; top: 20%; animation-duration: 19s; animation-delay: -4s; }
+        .particle:nth-child(18) { left: 89%; top: 52%; animation-duration: 26s; animation-delay: -10s; }
+        .particle:nth-child(19) { left: 94%; top: 72%; animation-duration: 21s; animation-delay: -6s; }
+        .particle:nth-child(20) { left: 97%; top: 15%; animation-duration: 23s; animation-delay: -12s; }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            15% {
+                opacity: .35;
+            }
+            50% {
+                transform: translateY(-70px);
+                opacity: .45;
+            }
+            85% {
+                opacity: .25;
+            }
+            100% {
+                transform: translateY(-150px);
+                opacity: 0;
+            }
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            background: #030712;
+        }
+
+        #loading-text {
+            margin: 0;
+            color: #9ca9c3;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .dots {
+            display: flex;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--blue);
+            box-shadow: 0 0 14px rgba(95,140,255,.7);
+            animation: loadingDot 1.2s infinite ease-in-out;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: .15s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: .3s;
+        }
+
+        @keyframes loadingDot {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: .45;
+            }
+            30% {
+                transform: translateY(-7px);
+                opacity: 1;
+            }
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            min-height: 68px;
+            padding: 0 28px;
+
+            background: rgba(4, 8, 18, .78);
+            border-bottom: 1px solid rgba(143,176,255,.13);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -.02em;
+        }
+
+        .brand-credit {
+            margin-left: 5px;
+            color: #66728a;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: .04em;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .navbar-right a {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border: 1px solid transparent;
+            border-radius: 11px;
+            transition:
+                background .2s ease,
+                border-color .2s ease,
+                transform .2s var(--ease);
+        }
+
+        .navbar-right a:hover {
+            background: rgba(95,140,255,.1);
+            border-color: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .navbar-right a:active {
+            transform: scale(.96);
+        }
+
+        .navbar-right img {
+            width: 18px;
+            height: 18px;
+            opacity: .72;
+            filter: brightness(0) invert(1);
+            transition: opacity .2s ease;
+        }
+
+        .navbar-right a:hover img {
+            opacity: 1;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .content {
+            position: relative;
+            width: 100%;
+            padding: 42px 20px 90px;
+        }
+
+        .fs {
+            width: min(760px, 100%);
+            margin: 0 auto;
+        }
+
+        .fs [hidden] {
+            display: none !important;
+        }
+
+        .fs-head {
+            margin-bottom: 25px;
+            animation: fsRise .65s var(--ease) both;
+        }
+
+        .fs-head h1 {
+            margin: 0 0 7px;
+            color: white;
+            font-size: clamp(2rem, 5vw, 3rem);
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -.035em;
+        }
+
+        .fs-head p {
+            margin: 0;
+            color: var(--muted);
+            font-size: .92rem;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .fs-card {
+            position: relative;
+            margin-bottom: 18px;
+            padding: 23px 23px 8px;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(14,24,48,.84),
+                    rgba(5,11,23,.82)
+                );
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.18),
+                inset 0 1px 0 rgba(255,255,255,.025);
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            animation: fsRise .65s var(--ease) backwards;
+            animation-delay: calc(.1s + var(--i) * 90ms);
+
+            transition:
+                border-color .25s ease,
+                transform .25s var(--ease),
+                box-shadow .25s ease;
+        }
+
+        .fs-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow:
+                0 18px 45px rgba(0,0,0,.24),
+                0 0 30px rgba(60,100,200,.05);
+        }
+
+        .fs-card h2 {
+            margin: 0 0 4px;
+            color: #f4f7ff;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .fs-card > p {
+            margin: 0 0 16px;
+            color: var(--muted);
+            font-size: .9rem;
+        }
+
+        /* =========================
+           ROWS
+        ========================= */
+
+        .fs-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 0;
+            border-top: 1px solid rgba(143,176,255,.1);
+        }
+
+        .fs-stack {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .fs-txt {
+            min-width: 0;
+        }
+
+        .fs-txt b {
+            display: block;
+            margin-bottom: 2px;
+            color: #eaf0ff;
+            font-size: .95rem;
+            font-weight: 600;
+        }
+
+        .fs-txt small {
+            display: block;
+            color: var(--muted);
+            font-size: .82rem;
+            line-height: 1.45;
+        }
+
+        /* =========================
+           INPUTS
+        ========================= */
+
+        .fs-field {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .fs input[type="text"] {
+            flex: 1;
+            min-width: 0;
+            height: 46px;
+
+            margin: 0;
+            padding: 0 14px;
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            outline: none;
+
+            background: rgba(255,255,255,.035);
+            color: var(--text);
+
+            font: 500 .95rem "Poppins", sans-serif;
+
+            transition:
+                border-color .2s ease,
+                background .2s ease,
+                box-shadow .25s ease;
+        }
+
+        .fs input[type="text"]::placeholder {
+            color: #65728a;
+            font-weight: 400;
+        }
+
+        .fs input[type="text"]:focus {
+            border-color: var(--blue);
+            background: rgba(95,140,255,.055);
+            box-shadow: 0 0 0 4px rgba(95,140,255,.12);
+        }
+
+        .fs input.bad {
+            border-color: var(--danger);
+        }
+
+        .fs-err {
+            color: #ff9292;
+            font-size: .82rem;
+            min-height: 0;
+        }
+
+        .fs-err:empty {
+            display: none;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .fs-btn {
+            flex: none;
+            height: 46px;
+            padding: 0 18px;
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.045);
+            color: var(--text);
+
+            font: 600 .9rem "Poppins", sans-serif;
+            cursor: pointer;
+
+            transition:
+                transform .22s var(--ease),
+                border-color .2s ease,
+                background .2s ease;
+        }
+
+        .fs-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--blue);
+            background: var(--blue-soft);
+        }
+
+        .fs-btn:active {
+            transform: scale(.97);
+        }
+
+        .fs-btn.danger:hover {
+            border-color: var(--danger);
+            background: rgba(255,133,133,.11);
+        }
+
+        .fs-key {
+            flex: none;
+            min-width: 78px;
+            height: 44px;
+            padding: 0 16px;
+
+            border: 1px solid rgba(95,140,255,.55);
+            border-radius: 12px;
+
+            background: rgba(95,140,255,.12);
+            color: #eaf0ff;
+
+            font: 600 1rem "Poppins", sans-serif;
+            cursor: pointer;
+
+            transition:
+                transform .22s var(--ease),
+                background .2s ease,
+                border-color .2s ease;
+        }
+
+        .fs-key:hover {
+            transform: translateY(-2px);
+            background: rgba(95,140,255,.18);
+            border-color: var(--blue-light);
+        }
+
+        .fs-key:active {
+            transform: scale(.97);
+        }
+
+        .fs-key.cap {
+            animation: fsPulse 1.2s ease-in-out infinite;
+        }
+
+        /* =========================
+           CHIPS
+        ========================= */
+
+        .fs-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .fs-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            height: 38px;
+            padding: 0 14px;
+
+            border: 1px solid var(--border);
+            border-radius: 999px;
+
+            background: rgba(255,255,255,.025);
+            color: #dce4f6;
+
+            font: 500 .85rem "Poppins", sans-serif;
+            cursor: pointer;
+
+            transition:
+                transform .2s var(--ease),
+                border-color .2s ease,
+                background .2s ease;
+        }
+
+        .fs-chip img {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            object-fit: contain;
+        }
+
+        .fs-chip:hover {
+            transform: translateY(-2px);
+            border-color: rgba(143,176,255,.38);
+            background: rgba(95,140,255,.07);
+        }
+
+        .fs-chip.on {
+            border-color: rgba(95,140,255,.7);
+            background: rgba(95,140,255,.16);
+            color: white;
+            box-shadow: 0 0 18px rgba(95,140,255,.07);
+        }
+
+        /* =========================
+           CUSTOM CLOAK
+        ========================= */
+
+        .fs-custom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            animation: fsRise .35s var(--ease) backwards;
+        }
+
+        /* =========================
+           SWITCH
+        ========================= */
+
+        .fs-switch {
+            appearance: none;
+            -webkit-appearance: none;
+
+            position: relative;
+            flex: none;
+
+            width: 46px;
+            height: 26px;
+            margin: 0;
+            padding: 0;
+
+            border: 0;
+            border-radius: 99px;
+
+            background: #252f43;
+            cursor: pointer;
+
+            transition: background .25s ease;
+        }
+
+        .fs-switch::after {
+            content: "";
+
+            position: absolute;
+            top: 3px;
+            left: 3px;
+
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+            background: #fff;
+
+            box-shadow: 0 2px 5px rgba(0,0,0,.25);
+
+            transition: transform .3s var(--ease);
+        }
+
+        .fs-switch:checked {
+            background: var(--blue);
+        }
+
+        .fs-switch:checked::after {
+            transform: translateX(20px);
+        }
+
+        /* =========================
+           FOCUS
+        ========================= */
+
+        .fs button:focus-visible,
+        .fs input:focus-visible {
+            outline: 2px solid var(--blue-light);
+            outline-offset: 3px;
+        }
+
+        /* =========================
+           TOAST
+        ========================= */
+
+        .fs-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 28px;
+            z-index: 9999;
+
+            padding: 10px 18px;
+
+            border: 1px solid rgba(95,140,255,.55);
+            border-radius: 12px;
+
+            background: rgba(10,17,32,.94);
+            color: #eaf0ff;
+
+            font: 500 .88rem "Poppins", sans-serif;
+
+            opacity: 0;
+            pointer-events: none;
+
+            transform: translate(-50%, 20px);
+
+            box-shadow: 0 10px 30px rgba(0,0,0,.3);
+
+            transition:
+                opacity .25s ease,
+                transform .35s var(--ease);
+        }
+
+        .fs-toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        /* =========================
+           ANIMATIONS
+        ========================= */
+
+        @keyframes fsRise {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fsPulse {
+            50% {
+                box-shadow:
+                    0 0 0 5px rgba(95,140,255,.16),
+                    0 0 25px rgba(95,140,255,.08);
+            }
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+            .navbar {
+                padding: 0 15px;
+            }
+
+            .brand-credit {
+                display: none;
+            }
+
+            .content {
+                padding: 30px 14px 70px;
+            }
+
+            .fs-card {
+                padding: 20px 17px 7px;
+                border-radius: 16px;
+            }
+
+            .fs-row {
+                align-items: flex-start;
+            }
+
+            .fs-switch {
+                margin-top: 2px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .fs-custom {
+                grid-template-columns: 1fr;
+            }
+
+            .fs-field {
+                flex-direction: column;
+            }
+
+            .fs-field .fs-btn {
+                width: 100%;
+            }
+
+            .fs-head h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+    <style id="final-light-theme">
+        html, body {
+            background: #f1f1f1 url("background.gif") center / cover fixed no-repeat !important;
+            color: #171717 !important;
+        }
+
+        body { background-color: #f1f1f1 !important; }
+        .navbar { display: none !important; }
+
+        .site-brand {
+            position: fixed;
+            top: 28px;
+            left: 50%;
+            z-index: 950;
+            transform: translateX(-50%);
+            color: #111;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -.06em;
+            text-shadow: 0 2px 10px rgba(255,255,255,.85);
+        }
+
+        .site-brand small {
+            display: block;
+            margin-top: 2px;
+            color: #555;
+            font-size: .62rem;
+            font-weight: 500;
+            letter-spacing: .04em;
+            text-align: center;
+            text-shadow: none;
+        }
+
+        .content { padding-top: 105px !important; }
+        .fs-head h1, .fs-card h2, .fs-txt b { color: #171717 !important; }
+        .fs-head p, .fs-card > p, .fs-txt small { color: #555 !important; }
+
+        .fs-card {
+            background: rgba(255,255,255,.86) !important;
+            border-color: rgba(0,0,0,.18) !important;
+            box-shadow: 0 12px 30px rgba(0,0,0,.1) !important;
+        }
+
+        .fs-row { border-color: rgba(0,0,0,.12) !important; }
+        .fs input[type="text"], .fs-btn {
+            background: rgba(255,255,255,.9) !important;
+            color: #171717 !important;
+            border-color: rgba(0,0,0,.2) !important;
+        }
+
+        .fs-chip { background: #f5f5f5 !important; color: #222 !important; border-color: #bbb !important; }
+        .fs-chip.on, .fs-key { background: #222 !important; color: #fff !important; border-color: #222 !important; }
+        .fs-switch:checked { background: #222 !important; }
+
+        .side-panel {
+            position: fixed;
+            top: 50%;
+            right: 24px;
+            z-index: 900;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,.88);
+            border: 1px solid rgba(0,0,0,.18);
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(0,0,0,.18);
+            backdrop-filter: blur(12px);
+        }
+
+        .side-panel a {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border: 1px solid transparent;
+            border-radius: 13px;
+        }
+
+        .side-panel a:hover, .side-panel a[aria-current="page"] {
+            background: #e0e0e0;
+            border-color: #999;
+        }
+
+        .side-panel img { width: 20px; height: 20px; filter: brightness(0); }
+        #loading-screen { background: #f4f4f4 !important; }
+        #loading-text { color: #555 !important; }
+        .dot { background: #222 !important; box-shadow: none !important; }
+
+        @media (max-width: 650px) {
+            .site-brand { top: 18px; }
+            .content { padding-top: 80px !important; }
+            .side-panel {
+                top: auto;
+                right: 12px;
+                bottom: 16px;
+                flex-direction: row;
+                transform: none;
+            }
+        }
+    </style>
+    <style id="clean-monochrome-finish">
+        html, body { background: #ececec url("background.gif") center / cover fixed no-repeat !important; color: #171717 !important; }
+        body { background-color: #ececec !important; }
+        .particles { display: none !important; }
+        .site-brand { top: 28px !important; color: #111 !important; font-size: clamp(2rem, 5vw, 3rem) !important; letter-spacing: -.08em !important; text-shadow: 0 2px 8px rgba(255,255,255,.8) !important; }
+        .site-brand small { color: #666 !important; font-size: .62rem !important; letter-spacing: .12em !important; }
+        .content { padding: 130px 20px 80px !important; }
+        .fs-head h1, .fs-card h2, .fs-txt b { color: #171717 !important; text-shadow: none !important; }
+        .fs-head p, .fs-card > p, .fs-txt small { color: #5d5d5d !important; }
+        .fs-card { background: rgba(255,255,255,.78) !important; border-color: rgba(0,0,0,.16) !important; box-shadow: 0 10px 25px rgba(0,0,0,.09) !important; backdrop-filter: blur(12px) !important; }
+        .fs-card:hover { border-color: #999 !important; box-shadow: 0 14px 30px rgba(0,0,0,.12) !important; }
+        .fs-row { border-color: rgba(0,0,0,.11) !important; }
+        .fs input[type="text"], .fs-btn { background: rgba(255,255,255,.86) !important; color: #171717 !important; border-color: rgba(0,0,0,.18) !important; }
+        .fs input[type="text"]:focus { border-color: #555 !important; box-shadow: 0 0 0 4px rgba(0,0,0,.07) !important; }
+        .fs-chip { background: #f3f3f3 !important; color: #222 !important; border-color: #c6c6c6 !important; }
+        .fs-chip:hover { background: #e7e7e7 !important; border-color: #888 !important; }
+        .fs-chip.on, .fs-key { background: #222 !important; color: #fff !important; border-color: #222 !important; }
+        .fs-switch:checked { background: #222 !important; }
+        .fs-toast { background: #222 !important; border-color: #222 !important; color: white !important; }
+        .side-panel { right: 22px !important; gap: 8px !important; padding: 8px !important; background: rgba(255,255,255,.78) !important; border: 1px solid rgba(0,0,0,.16) !important; border-radius: 16px !important; box-shadow: 0 12px 30px rgba(0,0,0,.15) !important; backdrop-filter: blur(14px) !important; }
+        .side-panel a { width: 44px !important; height: 44px !important; border-radius: 11px !important; }
+        .side-panel a:hover, .side-panel a[aria-current="page"] { background: #dedede !important; border-color: #999 !important; transform: none !important; box-shadow: none !important; }
+        .side-panel img { filter: brightness(0) !important; opacity: .72 !important; }
+        .side-panel a[aria-current="page"] img { opacity: 1 !important; }
+        #loading-screen { background: #f4f4f4 !important; }
+        #loading-text { color: #666 !important; }
+        .dot { background: #222 !important; box-shadow: none !important; }
+        @media (max-width: 650px) { .site-brand { top: 20px !important; } .content { padding: 105px 14px 70px !important; } .side-panel { right: 12px !important; bottom: 14px !important; } }
     </style>
 </head>
+
 <body>
+
+    <!-- WHITE PARTICLES -->
+    <div class="particles" aria-hidden="true">
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+    </div>
+
+    <!-- LOADING -->
     <div id="loading-screen">
         <div class="dots">
             <div class="dot"></div>
@@ -75,215 +949,736 @@
         </div>
         <h5 id="loading-text">Loading, please wait...</h5>
     </div>
+
+    <!-- NAVBAR -->
     <div class="navbar">
         <div class="navbar-left">
             <img src="png/logo.svg" alt="Farius Logo" class="logo">
             <span class="logo-text">Farius</span>
             <span class="brand-credit">Made by HOHOGAMES</span>
         </div>
+
         <div class="navbar-right">
-            <a href="index.html"><img src="png/house-solid.svg" alt="Home"></a>
-            <a href="games.html"><img src="png/gamepad-solid.svg" alt="Games"></a>
-            <a href="settings.html"><img src="png/gear-solid.svg" alt="Settings"></a>
+            <a href="index.html" aria-label="Home">
+                <img src="png/house-solid.svg" alt="Home">
+            </a>
+
+            <a href="games.html" aria-label="Games">
+                <img src="png/gamepad-solid.svg" alt="Games">
+            </a>
+
+            <a href="settings.html" aria-label="Settings">
+                <img src="png/gear-solid.svg" alt="Settings">
+            </a>
         </div>
     </div>
 
-    <div class="content">
-      <main class="fs">
-        <header class="fs-head">
-            <h1>Farius Settings</h1>
-            <p>Changes save automatically in this browser.</p>
-        </header>
-
-        <section class="fs-card" style="--i:0">
-            <h2>Panic key</h2>
-            <p>Press your key on any page to jump straight to a site you choose.</p>
-            <label class="fs-row">
-                <span class="fs-txt"><b>Turn on panic key</b><small>Ignored while you type in a text box, unless you use Ctrl, Alt or Meta.</small></span>
-                <input type="checkbox" class="fs-switch" id="panic-on" role="switch">
-            </label>
-            <div class="fs-row">
-                <span class="fs-txt"><b>Key</b><small>Click the button, then press any key or combo (like Ctrl + Q).</small></span>
-                <button type="button" class="fs-key" id="key-btn"></button>
-            </div>
-            <div class="fs-row fs-stack">
-                <span class="fs-txt"><b>Send me to</b><small>Pick a site below or paste your own link.</small></span>
-                <div class="fs-field">
-                    <input type="text" id="panic-url" placeholder="classroom.google.com" autocomplete="off" spellcheck="false" aria-label="Panic key link">
-                    <button type="button" class="fs-btn" id="panic-test">Test</button>
-                </div>
-                <span class="fs-err" id="url-msg"></span>
-                <div class="fs-chips" id="panic-chips"></div>
-            </div>
-        </section>
-
-        <section class="fs-card" style="--i:1">
-            <h2>Tab cloak</h2>
-            <p>Change the title and icon shown in your browser tab.</p>
-            <div class="fs-row fs-stack">
-                <div class="fs-chips" id="cloak-chips"></div>
-                <div class="fs-custom" id="cloak-custom" hidden>
-                    <input type="text" id="cloak-title" placeholder="Tab title" autocomplete="off" aria-label="Custom tab title">
-                    <input type="text" id="cloak-icon" placeholder="Icon link (https://...)" autocomplete="off" spellcheck="false" aria-label="Custom tab icon link">
-                </div>
-            </div>
-            <div class="fs-row">
-                <span class="fs-txt"><b>Open in about:blank</b><small>Opens Farius in a new blank tab. Allow pop-ups if nothing happens.</small></span>
-                <button type="button" class="fs-btn" id="blank-btn">Open</button>
-            </div>
-        </section>
-
-        <section class="fs-card" style="--i:2">
-            <h2>Site</h2>
-            <p>General options for how Farius behaves.</p>
-            <label class="fs-row">
-                <span class="fs-txt"><b>Ask before leaving</b><small>Shows a warning before you close or leave the tab, so you don't lose game progress.</small></span>
-                <input type="checkbox" class="fs-switch" id="leave-on" role="switch">
-            </label>
-            <label class="fs-row">
-                <span class="fs-txt"><b>Reduce animations</b><small>Turns off motion effects across the site.</small></span>
-                <input type="checkbox" class="fs-switch" id="calm-on" role="switch">
-            </label>
-            <div class="fs-row">
-                <span class="fs-txt"><b>Reset settings</b><small>Puts every setting back to its default.</small></span>
-                <button type="button" class="fs-btn danger" id="reset-btn">Reset</button>
-            </div>
-        </section>
-      </main>
+    <div class="site-brand" aria-label="Farius">
+        Farius
+        <small>Made by Hohogames</small>
     </div>
-    <div class="fs-toast" id="fs-toast" role="status" aria-live="polite"></div>
 
+    <nav class="side-panel" aria-label="Main navigation">
+        <a href="index.html" title="Home" aria-label="Home"><img src="png/house-solid.svg" alt=""></a>
+        <a href="games.html" title="Games" aria-label="Games"><img src="png/gamepad-solid.svg" alt=""></a>
+        <a href="chat.html" title="Chat" aria-label="Chat"><span aria-hidden="true">&#128172;</span></a>
+        <a href="settings.html" title="Settings" aria-label="Settings" aria-current="page"><img src="png/gear-solid.svg" alt=""></a>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <main class="fs">
+
+            <header class="fs-head">
+                <h1>Farius Settings</h1>
+                <p>Changes save automatically in this browser.</p>
+            </header>
+
+            <!-- PANIC KEY -->
+            <section class="fs-card" style="--i:0">
+
+                <h2>Panic key</h2>
+                <p>Press your key on any page to jump straight to a site you choose.</p>
+
+                <label class="fs-row">
+                    <span class="fs-txt">
+                        <b>Turn on panic key</b>
+                        <small>
+                            Ignored while you type in a text box, unless you use Ctrl,
+                            Alt or Meta.
+                        </small>
+                    </span>
+
+                    <input type="checkbox"
+                           class="fs-switch"
+                           id="panic-on"
+                           role="switch">
+                </label>
+
+                <div class="fs-row">
+
+                    <span class="fs-txt">
+                        <b>Key</b>
+                        <small>
+                            Click the button, then press any key or combo
+                            (like Ctrl + Q).
+                        </small>
+                    </span>
+
+                    <button type="button"
+                            class="fs-key"
+                            id="key-btn"></button>
+
+                </div>
+
+                <div class="fs-row fs-stack">
+
+                    <span class="fs-txt">
+                        <b>Send me to</b>
+                        <small>
+                            Pick a site below or paste your own link.
+                        </small>
+                    </span>
+
+                    <div class="fs-field">
+                        <input
+                            type="text"
+                            id="panic-url"
+                            placeholder="classroom.google.com"
+                            autocomplete="off"
+                            spellcheck="false"
+                            aria-label="Panic key link"
+                        >
+
+                        <button
+                            type="button"
+                            class="fs-btn"
+                            id="panic-test">
+                            Test
+                        </button>
+                    </div>
+
+                    <span class="fs-err" id="url-msg"></span>
+
+                    <div class="fs-chips" id="panic-chips"></div>
+
+                </div>
+
+            </section>
+
+            <!-- TAB CLOAK -->
+            <section class="fs-card" style="--i:1">
+
+                <h2>Tab cloak</h2>
+                <p>Change the title and icon shown in your browser tab.</p>
+
+                <div class="fs-row fs-stack">
+
+                    <div class="fs-chips" id="cloak-chips"></div>
+
+                    <div class="fs-custom" id="cloak-custom" hidden>
+
+                        <input
+                            type="text"
+                            id="cloak-title"
+                            placeholder="Tab title"
+                            autocomplete="off"
+                            aria-label="Custom tab title"
+                        >
+
+                        <input
+                            type="text"
+                            id="cloak-icon"
+                            placeholder="Icon link (https://...)"
+                            autocomplete="off"
+                            spellcheck="false"
+                            aria-label="Custom tab icon link"
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="fs-row">
+
+                    <span class="fs-txt">
+                        <b>Open in about:blank</b>
+                        <small>
+                            Opens Farius in a new blank tab. Allow pop-ups if
+                            nothing happens.
+                        </small>
+                    </span>
+
+                    <button
+                        type="button"
+                        class="fs-btn"
+                        id="blank-btn">
+                        Open
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- SITE -->
+            <section class="fs-card" style="--i:2">
+
+                <h2>Site</h2>
+                <p>General options for how Farius behaves.</p>
+
+                <label class="fs-row">
+
+                    <span class="fs-txt">
+                        <b>Ask before leaving</b>
+                        <small>
+                            Shows a warning before you close or leave the tab,
+                            so you don't lose game progress.
+                        </small>
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        class="fs-switch"
+                        id="leave-on"
+                        role="switch"
+                    >
+
+                </label>
+
+                <label class="fs-row">
+
+                    <span class="fs-txt">
+                        <b>Reduce animations</b>
+                        <small>
+                            Turns off motion effects across the site.
+                        </small>
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        class="fs-switch"
+                        id="calm-on"
+                        role="switch"
+                    >
+
+                </label>
+
+                <div class="fs-row">
+
+                    <span class="fs-txt">
+                        <b>Reset settings</b>
+                        <small>
+                            Puts every setting back to its default.
+                        </small>
+                    </span>
+
+                    <button
+                        type="button"
+                        class="fs-btn danger"
+                        id="reset-btn">
+                        Reset
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <div
+        class="fs-toast"
+        id="fs-toast"
+        role="status"
+        aria-live="polite">
+    </div>
+
+    <!-- GOOGLE ANALYTICS -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLTG1S4STB"></script>
+
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-WLTG1S4STB');
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag("js", new Date());
+        gtag("config", "G-WLTG1S4STB");
     </script>
+
+    <!-- FARIUS SETTINGS ENGINE -->
     <script src="/farius.js"></script>
+
     <script>
-    (function () {
-        var F = window.Farius, S = F.load(), $ = function (id) { return document.getElementById(id); };
-        var toastEl = $('fs-toast'), tt;
+        (function () {
 
-        function toast(m) {
-            toastEl.textContent = m;
-            toastEl.classList.add('show');
-            clearTimeout(tt);
-            tt = setTimeout(function () { toastEl.classList.remove('show'); }, 1700);
-        }
-        function commit(m) { F.save(S); toast(m || 'Saved'); }
-        function chip(label, icon, onClick) {
-            var b = document.createElement('button');
-            b.type = 'button'; b.className = 'fs-chip';
-            if (icon) { var i = document.createElement('img'); i.src = icon; i.alt = ''; b.appendChild(i); }
-            b.appendChild(document.createTextNode(label));
-            b.onclick = onClick;
-            return b;
-        }
-        function mark(box, test) {
-            [].forEach.call(box.children, function (c, i) {
-                var on = test(i);
-                c.classList.toggle('on', on);
-                c.setAttribute('aria-pressed', on);
+            var F = window.Farius;
+            var S = F.load();
+
+            var $ = function (id) {
+                return document.getElementById(id);
+            };
+
+            var toastEl = $("fs-toast");
+            var tt;
+
+            function toast(message) {
+                toastEl.textContent = message;
+                toastEl.classList.add("show");
+
+                clearTimeout(tt);
+
+                tt = setTimeout(function () {
+                    toastEl.classList.remove("show");
+                }, 1700);
+            }
+
+            function commit(message) {
+                F.save(S);
+                toast(message || "Saved");
+            }
+
+            function chip(label, icon, onClick) {
+
+                var b = document.createElement("button");
+
+                b.type = "button";
+                b.className = "fs-chip";
+
+                if (icon) {
+                    var i = document.createElement("img");
+
+                    i.src = icon;
+                    i.alt = "";
+
+                    b.appendChild(i);
+                }
+
+                b.appendChild(
+                    document.createTextNode(label)
+                );
+
+                b.onclick = onClick;
+
+                return b;
+            }
+
+            function mark(box, test) {
+
+                [].forEach.call(
+                    box.children,
+                    function (c, i) {
+
+                        var on = test(i);
+
+                        c.classList.toggle("on", on);
+                        c.setAttribute("aria-pressed", on);
+                    }
+                );
+            }
+
+            /* =========================
+               PANIC KEY
+            ========================= */
+
+            var keyBtn = $("key-btn");
+            var url = $("panic-url");
+            var urlMsg = $("url-msg");
+            var capturing = false;
+
+            $("panic-on").checked = S.panic.on;
+
+            $("panic-on").onchange = function () {
+
+                S.panic.on = this.checked;
+
+                commit(
+                    this.checked
+                        ? "Panic key on"
+                        : "Panic key off"
+                );
+            };
+
+            keyBtn.textContent = S.panic.label;
+
+            function stopCapture() {
+
+                capturing = false;
+                F.paused = false;
+
+                keyBtn.classList.remove("cap");
+                keyBtn.textContent = S.panic.label;
+            }
+
+            keyBtn.onclick = function () {
+
+                if (capturing) {
+                    return stopCapture();
+                }
+
+                capturing = true;
+                F.paused = true;
+
+                keyBtn.classList.add("cap");
+                keyBtn.textContent = "Press a key...";
+            };
+
+            keyBtn.onblur = stopCapture;
+
+            document.addEventListener(
+                "keydown",
+                function (e) {
+
+                    if (!capturing) {
+                        return;
+                    }
+
+                    if (e.key === "Tab") {
+                        return stopCapture();
+                    }
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if (
+                        ["Shift", "Control", "Alt", "Meta"]
+                            .indexOf(e.key) > -1
+                    ) {
+                        return;
+                    }
+
+                    if (e.key === "Escape") {
+                        return stopCapture();
+                    }
+
+                    var name =
+                        e.key === " "
+                            ? "Space"
+                            : (
+                                e.key.length === 1
+                                    ? e.key.toUpperCase()
+                                    : e.key
+                            );
+
+                    S.panic.code = e.code;
+                    S.panic.ctrl = e.ctrlKey;
+                    S.panic.alt = e.altKey;
+                    S.panic.shift = e.shiftKey;
+                    S.panic.meta = e.metaKey;
+
+                    S.panic.label =
+                        (e.ctrlKey ? "Ctrl + " : "") +
+                        (e.altKey ? "Alt + " : "") +
+                        (e.shiftKey ? "Shift + " : "") +
+                        (e.metaKey ? "Meta + " : "") +
+                        name;
+
+                    stopCapture();
+
+                    commit(
+                        "Key set to " + S.panic.label
+                    );
+                },
+                true
+            );
+
+            var pChips = $("panic-chips");
+
+            function markPanic() {
+
+                var cur = F.safeUrl(url.value);
+
+                mark(
+                    pChips,
+                    function (i) {
+                        return cur ===
+                            F.safeUrl(F.SITES[i].url);
+                    }
+                );
+            }
+
+            F.SITES.forEach(function (s) {
+
+                pChips.appendChild(
+                    chip(
+                        s.name,
+                        F.fav(s.domain),
+                        function () {
+
+                            url.value =
+                                S.panic.url = s.url;
+
+                            url.classList.remove("bad");
+                            urlMsg.textContent = "";
+
+                            markPanic();
+
+                            commit(
+                                "Link set to " + s.name
+                            );
+                        }
+                    )
+                );
+
             });
-        }
 
-        /* Panic key */
-        var keyBtn = $('key-btn'), url = $('panic-url'), urlMsg = $('url-msg'), capturing = false;
-        $('panic-on').checked = S.panic.on;
-        $('panic-on').onchange = function () { S.panic.on = this.checked; commit(this.checked ? 'Panic key on' : 'Panic key off'); };
-        keyBtn.textContent = S.panic.label;
+            url.value = S.panic.url;
 
-        function stopCapture() { capturing = false; F.paused = false; keyBtn.classList.remove('cap'); keyBtn.textContent = S.panic.label; }
-        keyBtn.onclick = function () {
-            if (capturing) return stopCapture();
-            capturing = true; F.paused = true;
-            keyBtn.classList.add('cap'); keyBtn.textContent = 'Press a key...';
-        };
-        keyBtn.onblur = stopCapture;
-        document.addEventListener('keydown', function (e) {
-            if (!capturing) return;
-            if (e.key === 'Tab') return stopCapture();
-            e.preventDefault(); e.stopPropagation();
-            if (['Shift', 'Control', 'Alt', 'Meta'].indexOf(e.key) > -1) return;
-            if (e.key === 'Escape') return stopCapture();
-            var name = e.key === ' ' ? 'Space' : (e.key.length === 1 ? e.key.toUpperCase() : e.key);
-            S.panic.code = e.code; S.panic.ctrl = e.ctrlKey; S.panic.alt = e.altKey; S.panic.shift = e.shiftKey; S.panic.meta = e.metaKey;
-            S.panic.label = (e.ctrlKey ? 'Ctrl + ' : '') + (e.altKey ? 'Alt + ' : '') + (e.shiftKey ? 'Shift + ' : '') + (e.metaKey ? 'Meta + ' : '') + name;
-            stopCapture();
-            commit('Key set to ' + S.panic.label);
-        }, true);
-
-        var pChips = $('panic-chips');
-        function markPanic() { var cur = F.safeUrl(url.value); mark(pChips, function (i) { return cur === F.safeUrl(F.SITES[i].url); }); }
-        F.SITES.forEach(function (s) {
-            pChips.appendChild(chip(s.name, F.fav(s.domain), function () {
-                url.value = S.panic.url = s.url;
-                url.classList.remove('bad'); urlMsg.textContent = '';
-                markPanic(); commit('Link set to ' + s.name);
-            }));
-        });
-        url.value = S.panic.url; markPanic();
-        url.oninput = function () {
-            var ok = !url.value.trim() || F.safeUrl(url.value);
-            url.classList.toggle('bad', !ok);
-            urlMsg.textContent = ok ? '' : 'Enter a full link, like classroom.google.com';
             markPanic();
-        };
-        url.onchange = function () {
-            var u = F.safeUrl(url.value);
-            if (!u && url.value.trim()) return;
-            u = u || F.SITES[0].url;
-            url.value = S.panic.url = u;
-            markPanic(); commit('Link saved');
-        };
-        $('panic-test').onclick = function () { window.open(F.safeUrl(url.value) || S.panic.url, '_blank', 'noopener'); };
 
-        /* Tab cloak */
-        var cChips = $('cloak-chips'), custom = $('cloak-custom'), cTitle = $('cloak-title'), cIcon = $('cloak-icon');
-        var opts = [{ id: 'none', name: 'Farius', icon: 'png/logo.svg' }]
-            .concat(F.SITES.map(function (s) { return { id: s.id, name: s.name, icon: F.fav(s.domain) }; }))
-            .concat([{ id: 'custom', name: 'Custom' }]);
-        function markCloak() { mark(cChips, function (i) { return opts[i].id === S.cloak.id; }); custom.hidden = S.cloak.id !== 'custom'; }
-        opts.forEach(function (o) {
-            cChips.appendChild(chip(o.name, o.icon, function () { S.cloak.id = o.id; markCloak(); commit(o.id === 'none' ? 'Cloak off' : 'Cloak set to ' + o.name); }));
-        });
-        cTitle.value = S.cloak.title; cIcon.value = S.cloak.icon; markCloak();
-        function saveCustom() { S.cloak.title = cTitle.value.trim(); S.cloak.icon = F.safeUrl(cIcon.value) || ''; commit(); }
-        cTitle.onchange = cIcon.onchange = saveCustom;
+            url.oninput = function () {
 
-        $('blank-btn').onclick = function () {
-            var w = window.open('about:blank', '_blank');
-            if (!w) return toast('Pop-up blocked. Allow pop-ups and try again.');
-            var info = F.cloakInfo(S.cloak), f = w.document.createElement('iframe');
-            w.document.title = (info && info.title) || 'Farius';
-            w.document.body.style.cssText = 'margin:0;background:#0e1117';
-            f.src = location.origin + '/';
-            f.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:0';
-            w.document.body.appendChild(f);
-        };
+                var ok =
+                    !url.value.trim() ||
+                    F.safeUrl(url.value);
 
-        /* Site */
-        $('leave-on').checked = S.confirmLeave;
-        $('leave-on').onchange = function () { S.confirmLeave = this.checked; commit(); };
-        $('calm-on').checked = S.calm;
-        $('calm-on').onchange = function () { S.calm = this.checked; commit(); };
+                url.classList.toggle("bad", !ok);
 
-        var resetBtn = $('reset-btn'), resetTimer;
-        resetBtn.onclick = function () {
-            if (resetBtn.dataset.sure) { F.reset(); return location.reload(); }
-            resetBtn.dataset.sure = '1'; resetBtn.textContent = 'Click to confirm';
-            resetTimer = setTimeout(function () { delete resetBtn.dataset.sure; resetBtn.textContent = 'Reset'; }, 3000);
-        };
-    })();
+                urlMsg.textContent =
+                    ok
+                        ? ""
+                        : "Enter a full link, like classroom.google.com";
+
+                markPanic();
+            };
+
+            url.onchange = function () {
+
+                var u = F.safeUrl(url.value);
+
+                if (!u && url.value.trim()) {
+                    return;
+                }
+
+                u = u || F.SITES[0].url;
+
+                url.value =
+                    S.panic.url = u;
+
+                markPanic();
+
+                commit("Link saved");
+            };
+
+            $("panic-test").onclick = function () {
+
+                window.open(
+                    F.safeUrl(url.value) || S.panic.url,
+                    "_blank",
+                    "noopener"
+                );
+            };
+
+            /* =========================
+               TAB CLOAK
+            ========================= */
+
+            var cChips = $("cloak-chips");
+            var custom = $("cloak-custom");
+            var cTitle = $("cloak-title");
+            var cIcon = $("cloak-icon");
+
+            var opts = [
+                {
+                    id: "none",
+                    name: "Farius",
+                    icon: "png/logo.svg"
+                }
+            ]
+            .concat(
+                F.SITES.map(function (s) {
+                    return {
+                        id: s.id,
+                        name: s.name,
+                        icon: F.fav(s.domain)
+                    };
+                })
+            )
+            .concat([
+                {
+                    id: "custom",
+                    name: "Custom"
+                }
+            ]);
+
+            function markCloak() {
+
+                mark(
+                    cChips,
+                    function (i) {
+                        return opts[i].id ===
+                            S.cloak.id;
+                    }
+                );
+
+                custom.hidden =
+                    S.cloak.id !== "custom";
+            }
+
+            opts.forEach(function (o) {
+
+                cChips.appendChild(
+                    chip(
+                        o.name,
+                        o.icon,
+                        function () {
+
+                            S.cloak.id = o.id;
+
+                            markCloak();
+
+                            commit(
+                                o.id === "none"
+                                    ? "Cloak off"
+                                    : "Cloak set to " + o.name
+                            );
+                        }
+                    )
+                );
+
+            });
+
+            cTitle.value = S.cloak.title;
+            cIcon.value = S.cloak.icon;
+
+            markCloak();
+
+            function saveCustom() {
+
+                S.cloak.title =
+                    cTitle.value.trim();
+
+                S.cloak.icon =
+                    F.safeUrl(cIcon.value) || "";
+
+                commit();
+            }
+
+            cTitle.onchange =
+                cIcon.onchange =
+                saveCustom;
+
+            $("blank-btn").onclick = function () {
+
+                var w =
+                    window.open(
+                        "about:blank",
+                        "_blank"
+                    );
+
+                if (!w) {
+                    return toast(
+                        "Pop-up blocked. Allow pop-ups and try again."
+                    );
+                }
+
+                var info =
+                    F.cloakInfo(S.cloak);
+
+                var f =
+                    w.document.createElement("iframe");
+
+                w.document.title =
+                    (info && info.title) ||
+                    "Farius";
+
+                w.document.body.style.cssText =
+                    "margin:0;background:#050913";
+
+                f.src =
+                    location.origin + "/";
+
+                f.style.cssText =
+                    "position:fixed;" +
+                    "inset:0;" +
+                    "width:100%;" +
+                    "height:100%;" +
+                    "border:0";
+
+                w.document.body.appendChild(f);
+            };
+
+            /* =========================
+               SITE SETTINGS
+            ========================= */
+
+            $("leave-on").checked =
+                S.confirmLeave;
+
+            $("leave-on").onchange = function () {
+
+                S.confirmLeave =
+                    this.checked;
+
+                commit();
+            };
+
+            $("calm-on").checked =
+                S.calm;
+
+            $("calm-on").onchange = function () {
+
+                S.calm =
+                    this.checked;
+
+                commit();
+            };
+
+            /* =========================
+               RESET
+            ========================= */
+
+            var resetBtn =
+                $("reset-btn");
+
+            var resetTimer;
+
+            resetBtn.onclick = function () {
+
+                if (resetBtn.dataset.sure) {
+
+                    F.reset();
+
+                    return location.reload();
+                }
+
+                resetBtn.dataset.sure = "1";
+                resetBtn.textContent =
+                    "Click to confirm";
+
+                resetTimer =
+                    setTimeout(
+                        function () {
+
+                            delete resetBtn.dataset.sure;
+
+                            resetBtn.textContent =
+                                "Reset";
+
+                        },
+                        3000
+                    );
+            };
+
+        })();
     </script>
+
+    <!-- LOADING SCRIPT -->
     <script src="/loading.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/@widgetbot/crate@3' async defer>
+
+    <!-- FARIUS CHAT -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3"
+        async
+        defer>
         new Crate({
-            server: '1305039802802110515', // Farius
-            channel: '1306073610921709618' // #site-chat
-        })
+            server: "1305039802802110515",
+            channel: "1306073610921709618"
+        });
     </script>
+
 </body>
 </html>
