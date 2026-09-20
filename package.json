@@ -1,14 +1,17 @@
 {
   "name": "hohogames-main",
   "version": "1.0.0",
-    "main": "server.mjs",
-    "description": "HOHOGAMES real-time chat server.",
-    "type": "module",
-    "dependencies": {
-      "socket.io": "^4.8.3"
-    },
+  "main": "server.mjs",
+  "description": "HOHOGAMES real-time chat server.",
+  "type": "module",
+  "dependencies": {
+    "@mercuryworkshop/bare-mux": "^2.1.9",
+    "@mercuryworkshop/libcurl-transport": "^2.0.5",
+    "@mercuryworkshop/wisp-js": "^0.5.0",
+    "socket.io": "^4.8.3"
+  },
   "scripts": {
-     "start": "node server.mjs"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

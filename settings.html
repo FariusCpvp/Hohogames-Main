@@ -89,6 +89,69 @@
         }
 
         /* ============================================
+           TOP NAVIGATION (same as index.html)
+           ============================================ */
+        .top-nav {
+            width: 100%;
+            max-width: 760px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.7s ease-out both;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 14px;
+            background: #ffffff;
+            border: 2px solid #e2e2e2;
+            color: #111;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.25s cubic-bezier(.2,.8,.2,1);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: #111;
+            border-color: #111;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+        }
+
+        .nav-item:active {
+            transform: translateY(-1px);
+        }
+
+        .nav-item[aria-current="page"] {
+            background: #111;
+            border-color: #111;
+            color: #fff;
+        }
+
+        .nav-item img {
+            width: 18px;
+            height: 18px;
+            filter: brightness(0);
+            opacity: 0.7;
+            transition: filter 0.25s ease, opacity 0.25s ease;
+        }
+
+        .nav-item:hover img,
+        .nav-item[aria-current="page"] img {
+            filter: brightness(0) invert(1);
+            opacity: 1;
+        }
+
+        /* ============================================
            SITE BRAND
            ============================================ */
         .site-brand {
@@ -127,7 +190,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 0 80px;
+            padding: 0 0 80px;
             animation: fadeInUp 0.8s ease-out both;
         }
 
@@ -451,71 +514,6 @@
         }
 
         /* ============================================
-           SIDE PANEL
-           ============================================ */
-        .side-panel {
-            position: fixed;
-            top: 50%;
-            right: 24px;
-            z-index: 900;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 10px;
-            transform: translateY(-50%);
-            background: #ffffff;
-            border: 2px solid #e8e8e8;
-            border-radius: 18px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
-            backdrop-filter: blur(12px);
-        }
-
-        .side-panel a {
-            display: grid;
-            place-items: center;
-            width: 48px;
-            height: 48px;
-            border: 2px solid transparent;
-            border-radius: 13px;
-            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-            text-decoration: none;
-            color: #111;
-            font-size: 20px;
-        }
-
-        .side-panel a:hover {
-            background: #f0f0f0;
-            border-color: #ccc;
-            transform: translateX(-3px);
-        }
-
-        .side-panel a[aria-current="page"] {
-            background: #111;
-            border-color: #111;
-        }
-
-        .side-panel a[aria-current="page"] img {
-            filter: brightness(0) invert(1) !important;
-            opacity: 1 !important;
-        }
-
-        .side-panel a[aria-current="page"] span {
-            filter: brightness(0) invert(1);
-        }
-
-        .side-panel img {
-            width: 20px;
-            height: 20px;
-            filter: brightness(0);
-            opacity: 0.72;
-            transition: opacity 0.2s ease;
-        }
-
-        .side-panel a:hover img {
-            opacity: 1;
-        }
-
-        /* ============================================
            TOAST
            ============================================ */
         .fs-toast {
@@ -546,27 +544,26 @@
         /* ============================================
            RESPONSIVE
            ============================================ */
-        @media (max-width: 900px) {
-            .side-panel {
-                top: auto;
-                right: 12px;
-                bottom: 16px;
-                flex-direction: row;
-                transform: none;
-            }
-
-            .side-panel a:hover {
-                transform: translateY(-3px);
-            }
-
-            .main-wrapper {
-                padding-bottom: 100px;
-            }
-        }
-
         @media (max-width: 650px) {
             body {
                 padding: 16px;
+            }
+
+            .top-nav {
+                gap: 8px;
+                margin-bottom: 28px;
+            }
+
+            .nav-item {
+                padding: 10px 16px;
+                font-size: 13px;
+                border-radius: 12px;
+                gap: 6px;
+            }
+
+            .nav-item img {
+                width: 16px;
+                height: 16px;
             }
 
             .site-brand {
@@ -615,20 +612,18 @@
                 height: 44px;
                 font-size: 0.88rem;
             }
-
-            .side-panel a {
-                width: 44px;
-                height: 44px;
-                border-radius: 11px;
-            }
-
-            .side-panel img {
-                width: 18px;
-                height: 18px;
-            }
         }
 
         @media (max-width: 480px) {
+            .top-nav {
+                flex-wrap: wrap;
+            }
+
+            .nav-item {
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+
             .fs-chips {
                 gap: 6px;
             }
@@ -667,6 +662,19 @@
         <h5 id="loading-text">Loading, please wait...</h5>
     </div>
 
+    <!-- Top Navigation -->
+    <nav class="top-nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-item" title="Home">
+            <img src="png/house-solid.svg" alt=""> Home
+        </a>
+        <a href="games.html" class="nav-item" title="Games">
+            <img src="png/gamepad-solid.svg" alt=""> Games
+        </a>
+        <a href="settings.html" class="nav-item" title="Settings" aria-current="page">
+            <img src="png/gear-solid.svg" alt=""> Settings
+        </a>
+    </nav>
+
     <!-- Main Content -->
     <div class="main-wrapper">
 
@@ -700,7 +708,7 @@
                     <b>Key</b>
                     <small>Click the button, then press any key or combo (like Ctrl + Q).</small>
                 </span>
-                <button type="button" class="fs-key" id="key-btn"></button>
+                <button type="button" class="fs-key" id="key-btn">Q</button>
             </div>
 
             <div class="fs-row fs-stack">
@@ -773,22 +781,6 @@
 
     </div>
 
-    <!-- Right-Side Navigation Panel -->
-    <nav class="side-panel" aria-label="Main navigation">
-        <a href="index.html" title="Home" aria-label="Home">
-            <img src="png/house-solid.svg" alt="">
-        </a>
-        <a href="games.html" title="Games" aria-label="Games">
-            <img src="png/gamepad-solid.svg" alt="">
-        </a>
-        <a href="chat.html" title="Chat" aria-label="Chat">
-            <span aria-hidden="true">&#128172;</span>
-        </a>
-        <a href="settings.html" title="Settings" aria-label="Settings" aria-current="page">
-            <img src="png/gear-solid.svg" alt="">
-        </a>
-    </nav>
-
     <!-- Toast -->
     <div class="fs-toast" id="fs-toast" role="status" aria-live="polite"></div>
 
@@ -816,20 +808,130 @@
         gtag("config", "G-WLTG1S4STB");
     </script>
 
-    <!-- Farius Settings Engine -->
-    <script src="/farius.js"></script>
-
+    <!-- Settings Engine (self-contained, no external /farius.js needed) -->
     <script>
         (function () {
-            var F = window.Farius;
-            if (!F) return;
+            "use strict";
 
-            var S = F.load();
+            /* ============================================
+               STORAGE
+               ============================================ */
+            var KEY = "farius-settings-v1";
+
+            var DEFAULTS = {
+                panic: {
+                    on: false,
+                    code: "KeyQ",
+                    label: "Q",
+                    ctrl: false,
+                    alt: false,
+                    shift: false,
+                    meta: false,
+                    url: "https://classroom.google.com"
+                },
+                cloak: {
+                    id: "none",
+                    title: "",
+                    icon: ""
+                },
+                confirmLeave: false,
+                calm: false
+            };
+
+            var SITES = [
+                { id: "classroom", name: "Classroom", url: "https://classroom.google.com", domain: "classroom.google.com" },
+                { id: "drive", name: "Drive", url: "https://drive.google.com", domain: "drive.google.com" },
+                { id: "docs", name: "Docs", url: "https://docs.google.com", domain: "docs.google.com" },
+                { id: "gmail", name: "Gmail", url: "https://mail.google.com", domain: "mail.google.com" },
+                { id: "khan", name: "Khan Academy", url: "https://www.khanacademy.org", domain: "khanacademy.org" },
+                { id: "wikipedia", name: "Wikipedia", url: "https://www.wikipedia.org", domain: "wikipedia.org" }
+            ];
+
+            function load() {
+                try {
+                    var raw = localStorage.getItem(KEY);
+                    if (!raw) return JSON.parse(JSON.stringify(DEFAULTS));
+                    var parsed = JSON.parse(raw);
+                    // deep merge defaults
+                    return {
+                        panic: Object.assign({}, DEFAULTS.panic, parsed.panic || {}),
+                        cloak: Object.assign({}, DEFAULTS.cloak, parsed.cloak || {}),
+                        confirmLeave: parsed.confirmLeave || false,
+                        calm: parsed.calm || false
+                    };
+                } catch (e) {
+                    return JSON.parse(JSON.stringify(DEFAULTS));
+                }
+            }
+
+            function save(state) {
+                try {
+                    localStorage.setItem(KEY, JSON.stringify(state));
+                } catch (e) {}
+            }
+
+            function reset() {
+                try { localStorage.removeItem(KEY); } catch (e) {}
+            }
+
+            function safeUrl(value) {
+                if (!value) return "";
+                var v = value.trim();
+                if (!v) return "";
+                if (!/^https?:\/\//i.test(v)) {
+                    v = "https://" + v;
+                }
+                try {
+                    var u = new URL(v);
+                    return u.href;
+                } catch (e) {
+                    return "";
+                }
+            }
+
+            function fav(domain) {
+                return "https://www.google.com/s2/favicons?domain=" + domain + "&sz=64";
+            }
+
+            function cloakInfo(cloak) {
+                if (!cloak || cloak.id === "none") return null;
+                if (cloak.id === "custom") {
+                    return {
+                        title: cloak.title || "Farius",
+                        icon: cloak.icon || ""
+                    };
+                }
+                for (var i = 0; i < SITES.length; i++) {
+                    if (SITES[i].id === cloak.id) {
+                        return {
+                            title: SITES[i].name,
+                            icon: fav(SITES[i].domain)
+                        };
+                    }
+                }
+                return null;
+            }
+
+            /* Expose for potential external use */
+            window.Farius = {
+                load: load,
+                save: save,
+                reset: reset,
+                safeUrl: safeUrl,
+                fav: fav,
+                cloakInfo: cloakInfo,
+                SITES: SITES,
+                paused: false
+            };
+
+            /* ============================================
+               UI
+               ============================================ */
+            var S = load();
             var $ = function (id) { return document.getElementById(id); };
 
             var toastEl = $("fs-toast");
             var tt;
-
             function toast(message) {
                 toastEl.textContent = message;
                 toastEl.classList.add("show");
@@ -840,8 +942,10 @@
             }
 
             function commit(message) {
-                F.save(S);
-                toast(message || "Saved");
+                save(S);
+                applyPanic();
+                applyCloak();
+                if (message) toast(message);
             }
 
             function chip(label, icon, onClick) {
@@ -852,6 +956,7 @@
                     var i = document.createElement("img");
                     i.src = icon;
                     i.alt = "";
+                    i.onerror = function () { this.style.display = "none"; };
                     b.appendChild(i);
                 }
                 b.appendChild(document.createTextNode(label));
@@ -867,10 +972,9 @@
                 });
             }
 
-            /* =========================
+            /* ============================================
                PANIC KEY
-            ========================= */
-
+               ============================================ */
             var keyBtn = $("key-btn");
             var url = $("panic-url");
             var urlMsg = $("url-msg");
@@ -887,7 +991,7 @@
 
             function stopCapture() {
                 capturing = false;
-                F.paused = false;
+                window.Farius.paused = false;
                 keyBtn.classList.remove("cap");
                 keyBtn.textContent = S.panic.label;
             }
@@ -895,7 +999,7 @@
             keyBtn.onclick = function () {
                 if (capturing) return stopCapture();
                 capturing = true;
-                F.paused = true;
+                window.Farius.paused = true;
                 keyBtn.classList.add("cap");
                 keyBtn.textContent = "Press a key...";
             };
@@ -904,11 +1008,11 @@
 
             document.addEventListener("keydown", function (e) {
                 if (!capturing) return;
-                if (e.key === "Tab") return stopCapture();
+                if (e.key === "Tab") { return stopCapture(); }
                 e.preventDefault();
                 e.stopPropagation();
                 if (["Shift", "Control", "Alt", "Meta"].indexOf(e.key) > -1) return;
-                if (e.key === "Escape") return stopCapture();
+                if (e.key === "Escape") { return stopCapture(); }
 
                 var name = e.key === " " ? "Space" : (e.key.length === 1 ? e.key.toUpperCase() : e.key);
 
@@ -932,15 +1036,15 @@
             var pChips = $("panic-chips");
 
             function markPanic() {
-                var cur = F.safeUrl(url.value);
+                var cur = safeUrl(url.value);
                 mark(pChips, function (i) {
-                    return cur === F.safeUrl(F.SITES[i].url);
+                    return cur === safeUrl(SITES[i].url);
                 });
             }
 
-            F.SITES.forEach(function (s) {
+            SITES.forEach(function (s) {
                 pChips.appendChild(
-                    chip(s.name, F.fav(s.domain), function () {
+                    chip(s.name, fav(s.domain), function () {
                         url.value = S.panic.url = s.url;
                         url.classList.remove("bad");
                         urlMsg.textContent = "";
@@ -954,37 +1058,37 @@
             markPanic();
 
             url.oninput = function () {
-                var ok = !url.value.trim() || F.safeUrl(url.value);
+                var ok = !url.value.trim() || safeUrl(url.value);
                 url.classList.toggle("bad", !ok);
                 urlMsg.textContent = ok ? "" : "Enter a full link, like classroom.google.com";
                 markPanic();
             };
 
             url.onchange = function () {
-                var u = F.safeUrl(url.value);
+                var u = safeUrl(url.value);
                 if (!u && url.value.trim()) return;
-                u = u || F.SITES[0].url;
+                u = u || SITES[0].url;
                 url.value = S.panic.url = u;
                 markPanic();
                 commit("Link saved");
             };
 
             $("panic-test").onclick = function () {
-                window.open(F.safeUrl(url.value) || S.panic.url, "_blank", "noopener");
+                var target = safeUrl(url.value) || S.panic.url;
+                if (target) window.open(target, "_blank", "noopener");
             };
 
-            /* =========================
+            /* ============================================
                TAB CLOAK
-            ========================= */
-
+               ============================================ */
             var cChips = $("cloak-chips");
             var custom = $("cloak-custom");
             var cTitle = $("cloak-title");
             var cIcon = $("cloak-icon");
 
             var opts = [{ id: "none", name: "Farius", icon: "png/logo.svg" }]
-                .concat(F.SITES.map(function (s) {
-                    return { id: s.id, name: s.name, icon: F.fav(s.domain) };
+                .concat(SITES.map(function (s) {
+                    return { id: s.id, name: s.name, icon: fav(s.domain) };
                 }))
                 .concat([{ id: "custom", name: "Custom" }]);
 
@@ -1000,6 +1104,7 @@
                     chip(o.name, o.icon, function () {
                         S.cloak.id = o.id;
                         markCloak();
+                        applyCloak();
                         commit(o.id === "none" ? "Cloak off" : "Cloak set to " + o.name);
                     })
                 );
@@ -1011,28 +1116,33 @@
 
             function saveCustom() {
                 S.cloak.title = cTitle.value.trim();
-                S.cloak.icon = F.safeUrl(cIcon.value) || "";
+                S.cloak.icon = safeUrl(cIcon.value) || "";
                 commit();
             }
 
-            cTitle.onchange = cIcon.onchange = saveCustom;
+            cTitle.onchange = saveCustom;
+            cIcon.onchange = saveCustom;
 
             $("blank-btn").onclick = function () {
                 var w = window.open("about:blank", "_blank");
-                if (!w) return toast("Pop-up blocked. Allow pop-ups and try again.");
-                var info = F.cloakInfo(S.cloak);
-                var f = w.document.createElement("iframe");
-                w.document.title = (info && info.title) || "Farius";
-                w.document.body.style.cssText = "margin:0;background:#f7f7f7";
-                f.src = location.origin + "/";
-                f.style.cssText = "position:fixed;inset:0;width:100%;height:100%;border:0";
-                w.document.body.appendChild(f);
+                if (!w) {
+                    toast("Pop-up blocked. Allow pop-ups and try again.");
+                    return;
+                }
+                try {
+                    var info = cloakInfo(S.cloak);
+                    var f = w.document.createElement("iframe");
+                    w.document.title = (info && info.title) || "Farius";
+                    w.document.body.style.cssText = "margin:0;background:#f7f7f7";
+                    f.src = location.origin + "/";
+                    f.style.cssText = "position:fixed;inset:0;width:100%;height:100%;border:0";
+                    w.document.body.appendChild(f);
+                } catch (e) {}
             };
 
-            /* =========================
+            /* ============================================
                SITE SETTINGS
-            ========================= */
-
+               ============================================ */
             $("leave-on").checked = S.confirmLeave;
             $("leave-on").onchange = function () {
                 S.confirmLeave = this.checked;
@@ -1045,16 +1155,15 @@
                 commit();
             };
 
-            /* =========================
+            /* ============================================
                RESET
-            ========================= */
-
+               ============================================ */
             var resetBtn = $("reset-btn");
-
             resetBtn.onclick = function () {
                 if (resetBtn.dataset.sure) {
-                    F.reset();
-                    return location.reload();
+                    reset();
+                    location.reload();
+                    return;
                 }
                 resetBtn.dataset.sure = "1";
                 resetBtn.textContent = "Click to confirm";
@@ -1063,8 +1172,114 @@
                     resetBtn.textContent = "Reset";
                 }, 3000);
             };
+
+            /* ============================================
+               APPLY PANIC KEY (GLOBAL)
+               ============================================ */
+            function keyMatches(e, p) {
+                if (!p.code) return false;
+                if (e.code !== p.code) return false;
+                if (e.ctrlKey !== p.ctrl) return false;
+                if (e.altKey !== p.alt) return false;
+                if (e.shiftKey !== p.shift) return false;
+                if (e.metaKey !== p.meta) return false;
+                return true;
+            }
+
+            function isTypingTarget(t) {
+                if (!t) return false;
+                var tag = (t.tagName || "").toLowerCase();
+                if (tag === "input" || tag === "textarea" || tag === "select") return true;
+                if (t.isContentEditable) return true;
+                return false;
+            }
+
+            function applyPanic() {
+                // handled by single global listener below
+            }
+
+            document.addEventListener("keydown", function (e) {
+                if (!S.panic.on) return;
+                if (window.Farius.paused) return;
+                if (!keyMatches(e, S.panic)) return;
+
+                // If typing in an input, require a modifier unless it's a function key
+                var typing = isTypingTarget(e.target);
+                var hasMod = e.ctrlKey || e.altKey || e.metaKey;
+                if (typing && !hasMod) return;
+
+                var target = safeUrl(S.panic.url) || SITES[0].url;
+                if (!target) return;
+
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = target;
+            }, true);
+
+            /* ============================================
+               APPLY CLOAK (TITLE + ICON)
+               ============================================ */
+            function applyCloak() {
+                var info = cloakInfo(S.cloak);
+                if (!info) return;
+                if (info.title) document.title = info.title;
+
+                if (info.icon) {
+                    // Update or create favicon link
+                    var links = document.querySelectorAll("link[rel*='icon']");
+                    var found = false;
+                    for (var i = 0; i < links.length; i++) {
+                        links[i].href = info.icon;
+                        found = true;
+                    }
+                    if (!found) {
+                        var l = document.createElement("link");
+                        l.rel = "icon";
+                        l.href = info.icon;
+                        document.head.appendChild(l);
+                    }
+                }
+            }
+
+            /* Apply on load */
+            applyCloak();
+
+            /* ============================================
+               CONFIRM LEAVE
+               ============================================ */
+            window.addEventListener("beforeunload", function (e) {
+                if (S.confirmLeave) {
+                    e.preventDefault();
+                    e.returnValue = "";
+                    return "";
+                }
+            });
+
+            /* ============================================
+               REDUCE ANIMATIONS
+               ============================================ */
+            function applyCalm() {
+                document.documentElement.style.scrollBehavior = S.calm ? "auto" : "smooth";
+                if (S.calm) {
+                    document.documentElement.classList.add("calm");
+                } else {
+                    document.documentElement.classList.remove("calm");
+                }
+            }
+            applyCalm();
+
         })();
     </script>
+
+    <style>
+        /* Reduced motion class applied by settings */
+        html.calm *,
+        html.calm *::before,
+        html.calm *::after {
+            animation: none !important;
+            transition: none !important;
+        }
+    </style>
 
 </body>
 </html>
