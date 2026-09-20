@@ -1,27 +1,30 @@
 {
-  "name": "hohogames-main",
-  "version": "1.0.0",
-  "main": "server.mjs",
-  "description": "HOHOGAMES real-time chat server.",
+  "name": "xylara",
+  "version": "1.6.0",
   "type": "module",
-  "dependencies": {
-    "@mercuryworkshop/bare-mux": "^2.1.9",
-    "@mercuryworkshop/libcurl-transport": "^2.0.5",
-    "@mercuryworkshop/wisp-js": "^0.5.0",
-    "socket.io": "^4.8.3"
+  "packageManager": "pnpm@9.12.3",
+  "engines": {
+    "npm": ">=10.0.0",
+    "node": ">=20.0.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FariusCpvp/Hohogames-Main.git"
+  "author": "playstation451",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "@mercuryworkshop/bare-as-module3": "^2.2.5",
+    "@mercuryworkshop/bare-mux": "^2.1.7",
+    "@mercuryworkshop/epoxy-transport": "^2.1.27",
+    "@mercuryworkshop/libcurl-transport": "^1.5.1",
+    "@mercuryworkshop/wisp-js": "^0.3.3",
+    "@tomphttp/bare-server-node": "^2.0.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "venus-pit": "^1.1.7",
+    "wisp-server-node": "^1.1.7"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/FariusCpvp/Hohogames-Main/issues"
-  },
-  "homepage": "https://github.com/FariusCpvp/Hohogames-Main#readme"
+  "devDependencies": {
+    "eslint": "^9.15.0"
+  }
 }
