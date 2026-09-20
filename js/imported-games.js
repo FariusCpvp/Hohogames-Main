@@ -99,7 +99,57 @@
         { folder: 'stickman-golf', image: 'stickman-golf.png' },
         { folder: 'aquapark-slides', image: 'aquapark-slides.png' },
         { folder: 'happy-hop', image: 'happy-hop.png' },
-        { folder: 'backrooms', image: 'backrooms.png' }
+        { folder: 'backrooms', image: 'backrooms.png' },
+        { folder: 'minecraft-classic', entry: 'index.html', image: 'minecraft-classic.png' },
+        { folder: 'fancypantsadventures', entry: 'index.html', image: 'fancypantsadventures.png' },
+        { folder: 'worlds-hardest-game-2', entry: 'index.html', image: 'worlds-hardest-game-2.jpg' },
+        { folder: 'bad-ice-cream-3', entry: 'index.html', image: 'bad-ice-cream-3.jpg' },
+        { folder: 'doublewires', entry: 'index.html', image: 'doublewires.png' },
+        { folder: 'rooftop-snipers', entry: 'index.html', image: 'rooftop-snipers.png' },
+        { folder: 'btd4', entry: 'index.html', image: 'btd4.jpg' },
+        { folder: 'Dogeminer2', entry: 'index.html', image: 'dogeminer2.jpg' },
+        { folder: 'bad-ice-cream-2', entry: 'index.html', image: 'bad-ice-cream-2.jpg' },
+        { folder: 'eaglerfaithful', entry: 'index.html', image: 'eaglerfaithful.png' },
+        { folder: 'marvinspectrum', entry: 'index.html', image: 'marvinspectrum.png' },
+        { folder: 'spinningrat', entry: 'index.html', image: 'spinningrat.jpg' },
+        { folder: 'webretro', entry: 'info/index.html', image: 'webretro.png' },
+        { folder: 'hba', entry: 'index.html', image: 'hba.JPG' },
+        { folder: 'bus and subway', entry: 'index.html', image: 'bus-and-subway.png' },
+        { folder: 'angelunder', entry: 'index.html', image: 'angelunder.png' },
+        { folder: 'riddletransfer2', entry: 'index.html', image: 'riddletransfer2.png' },
+        { folder: 'creativekillchamber', entry: 'index.html', image: 'creativekillchamber.jpg' },
+        { folder: 'greybox', entry: 'index.html', image: 'greybox.png' },
+        { folder: 'superfowlist', entry: 'index.html', image: 'superfowlist.png' },
+        { folder: 'flappy-2048', entry: 'index.html', image: 'flappy-2048.png' },
+        { folder: 'Trimps', entry: 'index.html', image: 'trimps.png' },
+        { folder: 'throwrocks', entry: 'index.html', image: 'throwrocks.png' },
+        { folder: 'weavesilk', entry: 'index.html', image: 'weavesilk.png' },
+        { folder: 'bloonstd2', entry: 'index.html', image: 'bloonstd2.png' },
+        { folder: 'webcleaner', entry: 'index.html', image: 'webcleaner.png' },
+        { folder: 'sushi-unroll', entry: 'index.html', image: 'sushi-unroll.png' },
+        { folder: 'amazing-rope-police', entry: 'index.html', image: 'amazing-rope-police.jpeg' },
+        { folder: 'missiles', entry: 'index.html', image: 'missiles.png' },
+        { folder: 'geodash', entry: 'index.html', image: 'geodash.png' },
+        { folder: 'yoshifabrication', entry: 'index.html', image: 'yoshifabrication.png' },
+        { folder: 'scooperia', entry: 'index.html', image: 'scooperia.png' },
+        { folder: 'fireboywatergirlforesttemple', entry: 'index.html', image: 'fireboywatergirlforesttemple.png' },
+        { folder: 'evil-glitch', entry: 'index.html', image: 'evil-glitch.png' },
+        { folder: 'basketball-stars', entry: 'index.html', image: 'basketball-stars.png' },
+        { folder: 'alienhominid', entry: 'index.html', image: 'alienhominid.jpg' },
+        { folder: 'minecraft-15', entry: 'index.html', image: 'minecraft-15.png' },
+        { folder: 'edgenotfound', entry: 'index.html', image: 'edgenotfound.png' },
+        { folder: 'hextris', entry: 'index.html', image: 'hextris.png' },
+        { folder: 'stick-duel-battle', entry: 'index.html', image: 'stick-duel-battle.jpg' },
+        { folder: 'motox3m-winter', entry: 'index.html', image: 'motox3m-winter.png' },
+        { folder: 'yohoho', entry: 'index.html', image: 'yohoho.png' },
+        { folder: 'crossyroad', entry: 'index.html', image: 'crossyroad.png' },
+        { folder: 'townscaper', entry: 'index.html', image: 'townscaper.jpg' },
+        { folder: 'temple-run-2', entry: 'index.html', image: 'temple-run-2.webp' },
+        { folder: 'tunnel-rush', entry: 'index.html', image: 'tunnel-rush.png' },
+        { folder: 'stickman-boost', entry: 'index.html', image: 'stickman-boost.jpeg' },
+        { folder: 'fairsquares', entry: 'index.html', image: 'fairsquares.png' },
+        { folder: 'boxhead2play', entry: 'index.html', image: 'boxhead2play.jpg' },
+        { folder: 'minecraftbeta', entry: 'index.html', image: 'minecraftbeta.png' }
     ];
 
     function displayName(folder) {
@@ -114,7 +164,7 @@
     games.forEach(function (game, index) {
         var card = document.createElement('a');
         card.className = 'gl-card';
-        card.href = 'games/' + encodeURIComponent(game.folder) + '/';
+        card.href = 'games/' + encodeURIComponent(game.folder) + '/' + (game.entry || '');
         card.style.setProperty('--i', grid.children.length + index);
 
         var art = document.createElement('span');

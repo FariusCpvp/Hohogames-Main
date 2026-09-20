@@ -3,95 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="icon" type="image/png" href="png/logo.png">
-
-    <title>Farius - Games</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
+    <title>Games — Farius</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
     <style>
+        /* ============================================
+           RESET & GLOBAL
+           ============================================ */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        html,
-        body {
+        html, body {
             width: 100%;
             min-height: 100%;
             overflow-x: hidden;
         }
 
         body {
-            font-family: "Poppins", sans-serif;
-            color: #f5f8ff;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f7f7f7;
+            color: #111;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-
-            background:
-                linear-gradient(
-                    rgba(3, 8, 22, 0.78),
-                    rgba(3, 8, 22, 0.86)
-                ),
-                url("background.png") center center / cover fixed no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px;
+            background-image:
+                radial-gradient(circle at 25% 15%, rgba(0,0,0,0.015) 0%, transparent 50%),
+                radial-gradient(circle at 75% 85%, rgba(0,0,0,0.015) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23e0e0e0' stroke-width='1.2'%3E%3Cpath d='M0 0h120v120H0z'/%3E%3Cpath d='M60 0v120M0 60h120'/%3E%3Ccircle cx='60' cy='60' r='20'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 120px 120px;
         }
 
-        /* ================================
-           PARTICLES
-        ================================= */
-
-        #particles {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .farius-particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.8);
-            box-shadow: 0 0 8px rgba(255,255,255,0.35);
-            animation: farParticle linear infinite;
-        }
-
-        @keyframes farParticle {
-            0% {
-                transform: translate3d(0, 105vh, 0);
-                opacity: 0;
-            }
-
-            12% {
-                opacity: .7;
-            }
-
-            50% {
-                opacity: .4;
-            }
-
-            85% {
-                opacity: .65;
-            }
-
-            100% {
-                transform: translate3d(70px, -10vh, 0);
-                opacity: 0;
-            }
-        }
-
-        /* ================================
-           LOADING
-        ================================= */
-
+        /* ============================================
+           LOADING SCREEN
+           ============================================ */
         #loading-screen {
             position: fixed;
             inset: 0;
@@ -99,9 +48,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: #02050c;
-            z-index: 99999;
-            transition: opacity .6s ease, visibility .6s ease;
+            background: #f7f7f7;
+            z-index: 9999;
+            transition: opacity 0.7s ease, visibility 0.7s ease;
         }
 
         #loading-screen.hidden {
@@ -112,483 +61,260 @@
 
         .dots {
             display: flex;
-            gap: 9px;
-            margin-bottom: 18px;
+            gap: 14px;
+            margin-bottom: 28px;
         }
 
         .dot {
-            width: 9px;
-            height: 9px;
-            background: #6d96ff;
+            width: 14px;
+            height: 14px;
+            background: #111;
             border-radius: 50%;
-            box-shadow: 0 0 14px rgba(80,130,255,.65);
-            animation: loadingBounce .9s infinite ease-in-out;
+            animation: loadingBounce 1s infinite ease-in-out;
         }
 
-        .dot:nth-child(2) {
-            animation-delay: .15s;
-        }
-
-        .dot:nth-child(3) {
-            animation-delay: .3s;
-        }
+        .dot:nth-child(2) { animation-delay: 0.18s; }
+        .dot:nth-child(3) { animation-delay: 0.36s; }
 
         @keyframes loadingBounce {
-            0%,
-            100% {
-                transform: translateY(0);
-                opacity: .3;
-            }
-
-            50% {
-                transform: translateY(-10px);
-                opacity: 1;
-            }
+            0%, 100% { transform: translateY(0); opacity: 0.15; }
+            50% { transform: translateY(-18px); opacity: 1; }
         }
 
         #loading-text {
-            color: rgba(255,255,255,.6);
-            font-size: 12px;
+            color: #666;
+            font-size: 15px;
             font-weight: 400;
             letter-spacing: 2px;
         }
 
-        /* ================================
-           NAVBAR
-        ================================= */
-
-        .navbar {
-            position: fixed;
-            top: 18px;
-            left: 50%;
-            transform: translateX(-50%);
-
-            width: min(94%, 1100px);
-            height: 68px;
-
+        /* ============================================
+           SITE BRAND
+           ============================================ */
+        .site-brand {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-
-            padding: 0 18px;
-
-            background: rgba(4,10,24,.84);
-
-            border: 1px solid rgba(90,135,255,.2);
-            border-radius: 19px;
-
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-
-            box-shadow:
-                0 15px 45px rgba(0,0,0,.4),
-                0 0 25px rgba(50,90,220,.07);
-
-            z-index: 1000;
-
-            animation: navbarDrop .65s cubic-bezier(.2,.8,.2,1);
+            text-align: center;
+            margin-bottom: 48px;
+            animation: fadeInUp 0.7s ease-out both;
         }
 
-        @keyframes navbarDrop {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -25px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-            }
-        }
-
-        .navbar-left {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-        }
-
-        .logo {
-            width: 34px;
-            height: 34px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 8px rgba(90,140,255,.25));
-            transition: transform .25s ease;
-        }
-
-        .navbar-left:hover .logo {
-            transform: scale(1.08);
-        }
-
-        .logo-text {
-            color: #fff;
-            font-size: 19px;
-            font-weight: 700;
-            letter-spacing: -.5px;
-        }
-
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
-
-        .navbar-right a {
-            width: 42px;
-            height: 42px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 12px;
-            border: 1px solid transparent;
-
-            transition:
-                transform .2s ease,
-                background .2s ease,
-                border-color .2s ease;
-        }
-
-        .navbar-right a:hover {
-            transform: translateY(-2px);
-            background: rgba(80,130,255,.12);
-            border-color: rgba(100,150,255,.3);
-        }
-
-        .navbar-right a:active {
-            transform: scale(.94);
-        }
-
-        .navbar-right img {
-            width: 19px;
-            height: 19px;
-            object-fit: contain;
-            filter: brightness(0) invert(1);
-            opacity: .72;
-        }
-
-        .navbar-right a:hover img {
-            opacity: 1;
-        }
-
-        /* ================================
-           GAME LIBRARY
-        ================================= */
-
-        .content {
-            width: 100%;
-            min-height: 100vh;
-            padding-top: 135px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .gl {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px 24px 70px;
-            color: #f4f7ff;
-            font-family: "Poppins", sans-serif;
-        }
-
-        .gl-head {
-            animation: glRise .55s ease both;
-        }
-
-        .gl-head h1 {
-            margin: 0 0 6px;
-            color: #fff;
-            font-size: clamp(2rem,5vw,3rem);
-            line-height: 1.1;
-            font-weight: 700;
-            letter-spacing: -.02em;
-            text-shadow: 0 0 30px rgba(70,120,255,.2);
-        }
-
-        .gl-head p {
-            margin: 0 0 24px;
-            color: #91a0ba;
-            font-size: 1rem;
-        }
-
-        /* ================================
-           SEARCH
-        ================================= */
-
-        .gl-search {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
-            max-width: 640px;
-            height: 54px;
-
-            padding: 0 16px;
-
-            border-radius: 15px;
-
-            background: rgba(5,13,30,.82);
-            border: 1px solid rgba(90,135,255,.2);
-
-            backdrop-filter: blur(10px);
-
-            transition:
-                border-color .2s ease,
-                box-shadow .25s ease,
-                transform .2s ease;
-
-            animation: glRise .55s .06s ease both;
-        }
-
-        .gl-search:hover {
-            border-color: rgba(90,140,255,.4);
-        }
-
-        .gl-search:focus-within {
-            border-color: #5f8cff;
-            box-shadow:
-                0 0 0 3px rgba(95,140,255,.1),
-                0 12px 35px rgba(20,70,180,.18);
-            transform: translateY(-1px);
-        }
-
-        .gl-search svg {
-            flex: none;
-            width: 20px;
-            height: 20px;
-            stroke: #8facff;
-        }
-
-        .gl-search input {
-            flex: 1;
-            min-width: 0;
-            width: auto;
-            height: 100%;
-
-            margin: 0;
-            padding: 0;
-
-            border: 0 !important;
-            outline: 0 !important;
-            box-shadow: none !important;
-
-            background: transparent !important;
-            color: #fff !important;
-
-            font: 500 1rem "Poppins", sans-serif;
-        }
-
-        .gl-search input::placeholder {
-            color: #74839e;
-            font-weight: 400;
-        }
-
-        .gl-search kbd {
-            flex: none;
-            padding: 2px 9px;
-
-            border-radius: 7px;
-            border: 1px solid rgba(100,140,220,.18);
-
-            background: rgba(255,255,255,.04);
-            color: #7f8ca5;
-
-            font: 500 .8rem "Poppins", sans-serif;
-        }
-
-        .gl-search.has-text kbd,
-        .gl-search:focus-within kbd {
-            display: none;
-        }
-
-        .gl-clear {
-            flex: none;
-
-            display: grid;
-            place-items: center;
-
-            width: 28px;
-            height: 28px;
-
-            padding: 0;
-
-            border: 0 !important;
-            border-radius: 50%;
-
-            background: rgba(255,255,255,.08);
-            color: #fff;
-
-            font-size: 1.1rem;
+        .site-brand strong {
+            font-size: clamp(3rem, 9vw, 5.5rem);
+            font-weight: 900;
+            letter-spacing: -0.06em;
+            color: #111;
             line-height: 1;
-
-            cursor: pointer;
+            margin-bottom: 8px;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
 
-        .gl-clear:hover {
-            background: rgba(90,140,255,.2);
+        .site-brand small {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #888;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
         }
 
+        /* ============================================
+           MAIN WRAPPER
+           ============================================ */
+        .main-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0 60px;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================
+           SEARCH
+           ============================================ */
+        .search-form {
+            width: 100%;
+            max-width: 640px;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        #gamesearch {
+            width: 100%;
+            height: 64px;
+            padding: 0 32px;
+            border-radius: 18px;
+            outline: none;
+            border: 2px solid #d8d8d8;
+            color: #111;
+            background: #ffffff;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            font-family: inherit;
+            font-size: 17px;
+            font-weight: 400;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        #gamesearch::placeholder {
+            color: #aaa;
+        }
+
+        #gamesearch:hover {
+            border-color: #b8b8b8;
+            box-shadow: 0 14px 48px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        #gamesearch:focus {
+            border-color: #111;
+            box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.06), 0 16px 52px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           COUNT META
+           ============================================ */
         .gl-meta {
-            margin: 14px 2px 22px;
-            color: #7f8da6;
-            font-size: .85rem;
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: 500;
             min-height: 1.3em;
+            margin-bottom: 32px;
+            text-align: center;
         }
 
-        /* ================================
+        /* ============================================
            GAME GRID
-        ================================= */
-
+           ============================================ */
         .gl-grid {
             display: grid;
-            grid-template-columns:
-                repeat(auto-fill, minmax(168px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 24px;
+            width: 100%;
+            margin-bottom: 40px;
         }
 
         .gl-card {
-            display: block;
-
-            padding: 8px;
-
-            border-radius: 15px;
-
-            background: rgba(5,13,29,.78);
-            border: 1px solid rgba(90,135,230,.17);
-
-            color: inherit;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-radius: 18px;
+            background: #ffffff;
+            border: 2px solid #e8e8e8;
             text-decoration: none;
-
-            box-shadow:
-                0 8px 25px rgba(0,0,0,.18);
-
-            transition:
-                transform .25s ease,
-                border-color .25s ease,
-                box-shadow .25s ease,
-                background .25s ease;
-
-            animation: glRise .5s ease both;
-            animation-delay:
-                calc(.08s + min(var(--i,0),20) * 18ms);
+            color: #111;
+            transition: all 0.3s cubic-bezier(.2,.8,.2,1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
-        .gl-card:hover,
-        .gl-card:focus-visible {
-            transform: translateY(-5px);
+        .gl-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #111;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
+        }
 
-            background: rgba(10,24,50,.94);
+        .gl-card:hover::before {
+            transform: scaleX(1);
+        }
 
-            border-color: rgba(95,145,255,.55);
-
-            box-shadow:
-                0 16px 35px rgba(0,0,0,.35),
-                0 0 25px rgba(60,110,230,.12);
-
-            outline: none;
+        .gl-card:hover {
+            background: #ffffff;
+            border-color: #111;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14);
         }
 
         .gl-card:active {
-            transform: translateY(-2px) scale(.985);
-        }
-
-        .gl-suggest {
-            border-style: dashed;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
 
         .gl-art {
             position: relative;
-
             display: block;
-
             aspect-ratio: 1;
-
             overflow: hidden;
-
-            border-radius: 10px;
-
-            background: #071225;
+            border-radius: 12px;
+            background: #f0f0f0;
+            margin-bottom: 12px;
         }
 
         .gl-art img {
             position: absolute;
             inset: 0;
-
             width: 100%;
             height: 100%;
-
             object-fit: cover;
-
-            transition: transform .35s ease;
+            transition: transform 0.35s ease;
         }
 
-        .gl-card:hover .gl-art img,
-        .gl-card:focus-visible .gl-art img {
+        .gl-card:hover .gl-art img {
             transform: scale(1.045);
         }
 
         .gl-play {
             position: absolute;
-
             left: 10px;
             right: 10px;
             bottom: 10px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             height: 36px;
-
             border-radius: 9px;
-
-            background: #5f8cff;
-
+            background: #111;
             color: #fff;
-
-            font: 600 .85rem "Poppins", sans-serif;
-
+            font-weight: 600;
+            font-size: 0.85rem;
             opacity: 0;
             transform: translateY(8px);
-
-            transition:
-                opacity .2s ease,
-                transform .25s ease;
+            transition: opacity 0.2s ease, transform 0.25s ease;
         }
 
-        .gl-card:hover .gl-play,
-        .gl-card:focus-visible .gl-play {
+        .gl-card:hover .gl-play {
             opacity: 1;
             transform: translateY(0);
         }
 
         .gl-card h3 {
-            margin: 10px 4px 4px;
-
+            margin: 0 4px 4px;
             overflow: hidden;
-
-            color: #f4f7ff;
-
-            font: 600 .9rem/1.3 "Poppins", sans-serif;
-
+            color: #111;
+            font-size: 0.95rem;
+            font-weight: 700;
             text-align: left;
             text-overflow: ellipsis;
             white-space: nowrap;
+            letter-spacing: -0.01em;
         }
 
-        /* ================================
-           EMPTY SEARCH
-        ================================= */
-
+        /* ============================================
+           EMPTY STATE
+           ============================================ */
         .gl-empty {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-
+            gap: 16px;
             padding: 64px 0;
-
-            color: #8c9ab3;
+            color: #888;
             text-align: center;
         }
 
@@ -598,1255 +324,793 @@
         }
 
         .gl-empty a {
-            padding: 9px 18px;
-
-            border-radius: 10px;
-
-            background: #5f8cff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            background: #111;
             color: #fff;
-
             font-weight: 600;
             text-decoration: none;
+            transition: background 0.2s ease, transform 0.2s ease;
         }
 
         .gl-empty a:hover {
-            background: #709aff;
+            background: #333;
+            transform: translateY(-2px);
         }
 
-        /* ================================
-           ANIMATION
-        ================================= */
-
-        @keyframes glRise {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 720px) {
+            body {
+                padding: 16px;
             }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .site-brand {
+                margin-bottom: 32px;
             }
-        }
 
-        /* ================================
-           SCROLLBAR
-        ================================= */
+            .site-brand strong {
+                font-size: 2.4rem;
+            }
 
-        ::-webkit-scrollbar {
-            width: 9px;
-            height: 9px;
-        }
+            .site-brand small {
+                font-size: 0.68rem;
+            }
 
-        ::-webkit-scrollbar-track {
-            background: #040814;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(
-                #385db8,
-                #6d94ff
-            );
-            border-radius: 20px;
-            border: 2px solid #040814;
-        }
-
-        ::selection {
-            background: rgba(95,140,255,.32);
-            color: #fff;
-        }
-
-        /* ================================
-           MOBILE
-        ================================= */
-
-        @media (max-width: 650px) {
-            .navbar {
-                top: 10px;
-                height: 62px;
+            #gamesearch {
+                height: 56px;
+                padding: 0 22px;
+                font-size: 15px;
                 border-radius: 16px;
             }
 
-            .logo-text {
-                display: none;
+            .search-form {
+                margin-bottom: 8px;
             }
 
-            .navbar-right {
-                gap: 2px;
-            }
-
-            .navbar-right a {
-                width: 38px;
-                height: 38px;
-            }
-
-            .content {
-                padding-top: 105px;
-            }
-
-            .gl {
-                padding:
-                    15px 14px 50px;
+            .gl-meta {
+                margin-bottom: 24px;
+                font-size: 0.82rem;
             }
 
             .gl-grid {
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-                gap: 12px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
             }
 
-            .gl-search {
-                height: 50px;
+            .gl-card {
+                padding: 8px;
+                border-radius: 14px;
             }
 
-            .gl-search kbd {
-                display: none;
+            .gl-art {
+                border-radius: 10px;
+                margin-bottom: 8px;
+            }
+
+            .gl-card h3 {
+                font-size: 0.82rem;
+                margin: 0 2px 2px;
+            }
+
+            .gl-play {
+                height: 30px;
+                font-size: 0.75rem;
+                border-radius: 7px;
+                left: 6px;
+                right: 6px;
+                bottom: 6px;
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation: none !important;
-                transition: none !important;
+        @media (max-width: 480px) {
+            .site-brand strong {
+                font-size: 2rem;
             }
 
-            .farius-particle {
-                display: none;
+            .gl-grid {
+                gap: 10px;
+            }
+
+            .gl-card {
+                padding: 6px;
+                border-radius: 12px;
+            }
+
+            .gl-card h3 {
+                font-size: 0.75rem;
             }
         }
-    </style>
-    <style id="final-light-theme">
-        /* Clean white theme and readable Farius branding */
-        html, body {
-            background: #f1f1f1 url("background.gif") center / cover fixed no-repeat !important;
-            color: #171717 !important;
-        }
-
-        body {
-            background-color: #f1f1f1 !important;
-        }
-
-        .navbar { display: none !important; }
-
-        .site-brand {
-            position: fixed;
-            top: 24px;
-            left: 50%;
-            z-index: 950;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transform: translateX(-50%);
-            color: #111;
-            font-size: clamp(2rem, 5vw, 2.8rem);
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: -.07em;
-            text-shadow: 0 2px 8px rgba(255,255,255,.7);
-        }
-
-        .site-brand small {
-            margin-top: 8px;
-            color: #666;
-            font-size: .66rem;
-            font-weight: 500;
-            line-height: 1;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            text-shadow: none;
-        }
-
-        .content { padding-top: 125px !important; }
-        .gl-head h1 {
-            color: #111 !important;
-            font-size: clamp(2.2rem, 5vw, 3.4rem);
-            font-weight: 800;
-            letter-spacing: -.055em;
-            text-shadow: none !important;
-        }
-        .gl-head p {
-            color: #555 !important;
-            font-size: 1rem;
-            letter-spacing: .01em;
-        }
-        .gl-meta { color: #666 !important; }
-
-        .gl-search, .gl-card {
-            background: rgba(255,255,255,.86) !important;
-            border-color: rgba(0,0,0,.18) !important;
-            color: #171717 !important;
-            box-shadow: 0 10px 25px rgba(0,0,0,.1) !important;
-        }
-
-        .gl-search input, .gl-card h3 { color: #171717 !important; }
-        .gl-search input::placeholder { color: #777 !important; }
-        .gl-art { background: #ddd !important; }
-        .gl-card:hover { background: #fff !important; border-color: #888 !important; }
-        .gl-play, .gl-empty a { background: #222 !important; }
-
-        .side-panel {
-            position: fixed;
-            top: 50%;
-            right: 24px;
-            z-index: 900;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 10px;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,.88);
-            border: 1px solid rgba(0,0,0,.18);
-            border-radius: 18px;
-            box-shadow: 0 12px 35px rgba(0,0,0,.18);
-            backdrop-filter: blur(12px);
-        }
-
-        .side-panel a {
-            display: grid;
-            place-items: center;
-            width: 48px;
-            height: 48px;
-            border: 1px solid transparent;
-            border-radius: 13px;
-        }
-
-        .side-panel a:hover, .side-panel a[aria-current="page"] {
-            background: #e0e0e0;
-            border-color: #999;
-        }
-
-        .side-panel img { width: 20px; height: 20px; filter: brightness(0); }
-
-        #loading-screen { background: #f4f4f4 !important; }
-        #loading-text { color: #555 !important; }
-        .dot { background: #222 !important; box-shadow: none !important; }
-
-        @media (max-width: 650px) {
-            .site-brand { top: 18px; }
-            .site-brand small { font-size: .58rem; }
-            .content { padding-top: 92px !important; }
-            .side-panel {
-                top: auto;
-                right: 12px;
-                bottom: 16px;
-                flex-direction: row;
-                transform: none;
-            }
-        }
-    </style>
-    <style id="clean-monochrome-finish">
-        html, body {
-            background: #ececec url("background.gif") center / cover fixed no-repeat !important;
-            color: #171717 !important;
-        }
-        body { background-color: #ececec !important; }
-        #particles { display: none !important; }
-        .site-brand {
-            top: 28px !important;
-            color: #111 !important;
-            font-size: clamp(2rem, 5vw, 3rem) !important;
-            letter-spacing: -.08em !important;
-            text-shadow: 0 2px 8px rgba(255,255,255,.8) !important;
-        }
-        .site-brand small { color: #666 !important; font-size: .62rem !important; letter-spacing: .12em !important; }
-        .content { padding-top: 132px !important; }
-        .gl { max-width: 1320px !important; padding: 25px 26px 80px !important; }
-        .gl-head h1 { color: #111 !important; font-size: clamp(2.4rem, 5vw, 3.5rem) !important; letter-spacing: -.07em !important; text-shadow: none !important; }
-        .gl-head p, .gl-meta { color: #5d5d5d !important; }
-        .gl-search, .gl-card { background: rgba(255,255,255,.78) !important; border-color: rgba(0,0,0,.16) !important; box-shadow: 0 10px 24px rgba(0,0,0,.09) !important; }
-        .gl-search:focus-within { border-color: #555 !important; box-shadow: 0 0 0 4px rgba(0,0,0,.07) !important; transform: none !important; }
-        .gl-search svg { stroke: #555 !important; }
-        .gl-search input, .gl-card h3 { color: #171717 !important; }
-        .gl-search input::placeholder { color: #777 !important; }
-        .gl-search kbd { background: #eee !important; border-color: #ccc !important; color: #666 !important; }
-        .gl-card:hover, .gl-card:focus-visible { background: #fff !important; border-color: #888 !important; box-shadow: 0 14px 28px rgba(0,0,0,.14) !important; transform: translateY(-4px) !important; }
-        .gl-art { background: #ddd !important; }
-        .gl-play, .gl-empty a { background: #222 !important; }
-        .side-panel { right: 22px !important; gap: 8px !important; padding: 8px !important; background: rgba(255,255,255,.78) !important; border: 1px solid rgba(0,0,0,.16) !important; border-radius: 16px !important; box-shadow: 0 12px 30px rgba(0,0,0,.15) !important; backdrop-filter: blur(14px) !important; }
-        .side-panel a { width: 44px !important; height: 44px !important; border-radius: 11px !important; }
-        .side-panel a:hover, .side-panel a[aria-current="page"] { background: #dedede !important; border-color: #999 !important; transform: none !important; box-shadow: none !important; }
-        .side-panel img { filter: brightness(0) !important; opacity: .72 !important; }
-        .side-panel a[aria-current="page"] img { opacity: 1 !important; }
-        #loading-screen { background: #f4f4f4 !important; }
-        #loading-text { color: #666 !important; }
-        .dot { background: #222 !important; box-shadow: none !important; }
-        @media (max-width: 650px) { .site-brand { top: 20px !important; } .content { padding-top: 105px !important; } .gl { padding: 18px 14px 70px !important; } .side-panel { right: 12px !important; bottom: 14px !important; } }
     </style>
 </head>
-
 <body>
 
-    <!-- WHITE PARTICLES -->
-    <div id="particles"></div>
-
-    <!-- LOADING -->
+    <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="dots">
             <div class="dot"></div>
             <div class="dot"></div>
             <div class="dot"></div>
         </div>
-
-        <h5 id="loading-text">
-            Loading, please wait...
-        </h5>
+        <h5 id="loading-text">Loading, please wait...</h5>
     </div>
 
-    <!-- CLEAN SITE BRAND -->
-    <header class="site-brand" aria-label="Farius">
-        <strong>Farius</strong>
-        <small>Made by Hohogames</small>
-    </header>
+    <!-- Main Content -->
+    <div class="main-wrapper">
 
-    <nav class="side-panel" aria-label="Main navigation">
-        <a href="index.html" title="Home" aria-label="Home"><img src="png/house-solid.svg" alt=""></a>
-        <a href="games.html" title="Games" aria-label="Games" aria-current="page"><img src="png/gamepad-solid.svg" alt=""></a>
-        <a href="chat.html" title="Chat" aria-label="Chat"><span aria-hidden="true">&#128172;</span></a>
-        <a href="settings.html" title="Settings" aria-label="Settings"><img src="png/gear-solid.svg" alt=""></a>
-    </nav>
+        <!-- Brand -->
+        <header class="site-brand" aria-label="Farius">
+            <strong>Farius</strong>
+            <small>Made by Hohogames</small>
+        </header>
 
-    <!-- MAIN -->
-    <div class="content">
-
-        <main class="gl">
-
-            <header class="gl-head">
-
-                <h1>Games</h1>
-
-                <p>
-                    Choose a game to start playing!
-                </p>
-
-            </header>
-
-            <!-- SEARCH -->
-            <div
-                class="gl-search"
-                id="gl-search"
+        <!-- Search -->
+        <div class="search-form">
+            <input
+                type="text"
+                id="gamesearch"
+                placeholder="Search games..."
+                autocomplete="off"
+                spellcheck="false"
+                aria-label="Search games"
             >
-
-                <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                >
-                    <circle
-                        cx="11"
-                        cy="11"
-                        r="7"
-                    />
-
-                    <path
-                        d="m20 20-3.5-3.5"
-                    />
-                </svg>
-
-                <input
-                    type="text"
-                    id="gamesearch"
-                    placeholder="Search games"
-                    autocomplete="off"
-                    spellcheck="false"
-                    aria-label="Search games"
-                >
-
-                <kbd>/</kbd>
-
-                <button
-                    type="button"
-                    class="gl-clear"
-                    id="gl-clear"
-                    aria-label="Clear search"
-                    hidden
-                >
-                    &times;
-                </button>
-
-            </div>
-
-            <p
-                class="gl-meta"
-                id="gl-count"
-                aria-live="polite"
-            ></p>
-
-            <!-- GAME GRID -->
-            <div
-                class="gl-grid"
-                id="gameGallery"
-            >
-
-                <a
-                    class="gl-card gl-suggest"
-                    href="https://forms.gle/azBWo53JQN8VNzFt5"
-                    target="_blank"
-                    rel="noopener"
-                    style="--i:0"
-                >
-                    <span class="gl-art">
-                        <img
-                            src="/png/games/forms.png"
-                            alt=""
-                            loading="lazy"
-                        >
-                        <span class="gl-play">
-                            Suggest
-                        </span>
-                    </span>
-                    <h3>Game Suggestions</h3>
-                </a>
-
-                <a class="gl-card" href="games/1" style="--i:1">
-                    <span class="gl-art">
-                        <img src="png/games/12.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>1</h3>
-                </a>
-
-                <a class="gl-card" href="games/1v1lol" style="--i:2">
-                    <span class="gl-art">
-                        <img src="png/games/1v1.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>1v1.lol</h3>
-                </a>
-
-                <a class="gl-card" href="games/2048" style="--i:3">
-                    <span class="gl-art">
-                        <img src="png/games/2048.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>2048</h3>
-                </a>
-
-                <a class="gl-card" href="games/ovo" style="--i:4">
-                    <span class="gl-art">
-                        <img src="/png/games/ovo.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>OvO</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-dgdpaeaoeq.aoo%2Feaoeq%2Fmvm2-0%2C2clrhc%2F" style="--i:5">
-                    <span class="gl-art">
-                        <img src="/png/games/ovo 2.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>OvO 2</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-mctjgcmgs46%2Cgktju%60.ko-gcmgs-hvmn5-oto1dkmgnqimnq%2F" style="--i:6">
-                    <span class="gl-art">
-                        <img src="/png/games/ovodi.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>OvO Dimensions</h3>
-                </a>
-
-                <a class="gl-card" href="games/slope" style="--i:7">
-                    <span class="gl-art">
-                        <img src="png/games/slope.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Slope</h3>
-                </a>
-
-                <a class="gl-card" href="games/retro-bowl" style="--i:8">
-                    <span class="gl-art">
-                        <img src="png/games/retro-bowl.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Retro Bowl</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-nmweg%2Clml-%3Flg%5Didp%5Dpcrvngr%3Fsioml" style="--i:9">
-                    <span class="gl-art">
-                        <img src="/png/games/rbx.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Roblox</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-a%2Fsoanl%2Fwmrndaur.eivhwb%2Cim%2Fdine-" style="--i:10">
-                    <span class="gl-art">
-                        <img src="png/games/samll.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>A Small World Cup</h3>
-                </a>
-
-                <a class="gl-card" href="games/sm64" style="--i:11">
-                    <span class="gl-art">
-                        <img src="png/games/sm64.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>SM64</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-ivstiha%7Bskneh%2Cgktju%60.ko-Slou-Pifep3F%2F" style="--i:12">
-                    <span class="gl-art">
-                        <img src="png/games/snow.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Snow Rider 3D</h3>
-                </a>
-
-                <a class="gl-card" href="games/soccer-random" style="--i:13">
-                    <span class="gl-art">
-                        <img src="png/games/soccer.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Soccer Random</h3>
-                </a>
-
-                <a class="gl-card" href="/games/baldis-basics/index.html" style="--i:14">
-                    <span class="gl-art">
-                        <img src="/games/baldis-basics/splash.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Baldis Basics</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-sjenlqhmci.ko-" style="--i:15">
-                    <span class="gl-art">
-                        <img src="png/games/shell.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Shell Shockers</h3>
-                </a>
-
-                <a class="gl-card" href="games/tiny-fishing" style="--i:16">
-                    <span class="gl-art">
-                        <img src="png/games/tiny.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Tiny Fishing</h3>
-                </a>
-
-                <a class="gl-card" href="games/worlds-hardest-game" style="--i:17">
-                    <span class="gl-art">
-                        <img src="png/games/world.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Worlds Hardest Game</h3>
-                </a>
-
-                <a class="gl-card" href="games/MonkeyMart" style="--i:18">
-                    <span class="gl-art">
-                        <img src="png/games/monkey.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Monkey Mart</h3>
-                </a>
-
-                <a class="gl-card" href="games/idle-breakout" style="--i:19">
-                    <span class="gl-art">
-                        <img src="png/games/idle.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Idle Breakout</h3>
-                </a>
-
-                <a class="gl-card" href="games/Rocket-League" style="--i:20">
-                    <span class="gl-art">
-                        <img src="png/games/rocket.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Rocket League</h3>
-                </a>
-
-                <a class="gl-card" href="games/a-dance-of-fire-and-ice" style="--i:21">
-                    <span class="gl-art">
-                        <img src="png/games/adofai.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>ADOFAI</h3>
-                </a>
-
-                <a class="gl-card" href="games/basket-random" style="--i:22">
-                    <span class="gl-art">
-                        <img src="png/games/basket.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Basket Random</h3>
-                </a>
-
-                <a class="gl-card" href="games/bitlife" style="--i:23">
-                    <span class="gl-art">
-                        <img src="png/games/bit.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Bitlife</h3>
-                </a>
-
-                <a class="gl-card" href="games/bloonstd" style="--i:24">
-                    <span class="gl-art">
-                        <img src="png/games/bloons.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Bloon TD1</h3>
-                </a>
-
-                <a class="gl-card" href="games/btd5" style="--i:25">
-                    <span class="gl-art">
-                        <img src="png/games/bloons5.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Bloons TD5</h3>
-                </a>
-
-                <a class="gl-card" href="games/cookie-clicker" style="--i:26">
-                    <span class="gl-art">
-                        <img src="png/games/cookie.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Cookie Clicker</h3>
-                </a>
-
-                <a class="gl-card" href="games/eggycar" style="--i:27">
-                    <span class="gl-art">
-                        <img src="png/games/eggy-car.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Eggy Car</h3>
-                </a>
-
-                <a class="gl-card" href="games/fnaf/" style="--i:28">
-                    <span class="gl-art">
-                        <img src="png/games/splash.jpg" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>FNAF</h3>
-                </a>
-
-                <a class="gl-card" href="games/ducklife1/" style="--i:29">
-                    <span class="gl-art">
-                        <img src="png/games/ducklife.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Duck Life 1</h3>
-                </a>
-
-                <a class="gl-card" href="games/rbcollege" style="--i:30">
-                    <span class="gl-art">
-                        <img src="png/games/rbc.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Retro Bowl College</h3>
-                </a>
-
-                <a class="gl-card" href="games/csgo-clicker" style="--i:31">
-                    <span class="gl-art">
-                        <img src="png/games/csgo.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Csgo Clicker</h3>
-                </a>
-
-                <a class="gl-card" href="games/death-run-3d" style="--i:32">
-                    <span class="gl-art">
-                        <img src="png/games/death.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Death Run 3D</h3>
-                </a>
-
-                <a class="gl-card" href="games/drift-boss" style="--i:33">
-                    <span class="gl-art">
-                        <img src="png/games/drift.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Drift Boss</h3>
-                </a>
-
-                <a class="gl-card" href="games/drive-mad" style="--i:34">
-                    <span class="gl-art">
-                        <img src="png/games/drive.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Drive Mad</h3>
-                </a>
-
-                <a class="gl-card" href="games/minecraft-15" style="--i:35">
-                    <span class="gl-art">
-                        <img src="png/games/mine15.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Minecraft 1.5</h3>
-                </a>
-
-                <a class="gl-card" href="games/learntofly" style="--i:36">
-                    <span class="gl-art">
-                        <img src="png/games/learn.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Learn To Fly</h3>
-                </a>
-
-                <a class="gl-card" href="games/minecraft-18" style="--i:37">
-                    <span class="gl-art">
-                        <img src="png/games/mine18.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Minecraft 1.8</h3>
-                </a>
-
-                <a class="gl-card" href="games/run" style="--i:38">
-                    <span class="gl-art">
-                        <img src="png/games/run.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Run</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-soaqhiaptq.ko-" style="--i:39">
-                    <span class="gl-art">
-                        <img src="png/games/smash.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Smash Karts</h3>
-                </a>
-
-                <a class="gl-card" href="games/drift-hunters" style="--i:40">
-                    <span class="gl-art">
-                        <img src="png/games/hunt.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Drift Hunter</h3>
-                </a>
-
-                <a class="gl-card" href="games/osu!" style="--i:41">
-                    <span class="gl-art">
-                        <img src="/png/games/osu!.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Osu!</h3>
-                </a>
-
-                <a class="gl-card" href="games/stickman-hook" style="--i:42">
-                    <span class="gl-art">
-                        <img src="png/games/stickman.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Stickman Hook</h3>
-                </a>
-
-                <a class="gl-card" href="games/riddleschool" style="--i:43">
-                    <span class="gl-art">
-                        <img src="png/games/riddle.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Riddle School</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-bnoak%2Fbnaqt%2Cim%2Feaoe-bnoak%2Fbnaqt-" style="--i:44">
-                    <span class="gl-art">
-                        <img src="png/games/bb.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Block Blast</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-gcmgs%2Fcfn%2Csxv%7B.ws%2Cke%2Frrmjgcvs-cvr-" style="--i:45">
-                    <span class="gl-art">
-                        <img src="png/games/ctr.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Cut The Rope</h3>
-                </a>
-
-                <a class="gl-card" href="games/subway-surfers/" style="--i:46">
-                    <span class="gl-art">
-                        <img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfyjATFe7Qg15j5x1YktUbABxgr6BlbKXKECbj6KH2QzbgKqzw"
-                            alt=""
-                        >
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Subway Surfers</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-arp%2F370382.eaoeq.q3%2Cycnfez.lev%2F1521%3A0-oqpisvu60c8pttgaah1h61pukvlnxpg3%2Fknfez.jtol%3Dcnif%3D6466197%26cmr%3Bi52if%3D'7A%26cmr%3Beaf_qowrae%3F1%24aop9sfk%3F%250Fqdi%250F%5D%250Ft2%2C6195cf82c4dg64c2347f.hs!opieil%3Djtvpq%251A'2D%250Frlcyjor.aoo%26cmr%3Bcpr-kd%3F370382%26cmr%3Bfetiae%2Ft%7Bpg%3Dfeqkvor" style="--i:47">
-                    <span class="gl-art">
-                        <img
-                            src="https://play-lh.googleusercontent.com/45HfPjWkdT8k1Y-1kb2ce9dtU4cIq4PXZGPSOQDBHRO_sBWG7Fu9mKKsk9WylHW1Lg=w240-h480-rw"
-                            alt=""
-                        >
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Thorns &amp; Balloons</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-pna%7B.eedopcgnmw%2Ccmm-mcln%2F!%2Ffegpnilk%3Dgcmg-kd%3F44bda%6004-f844%2F445f-%3Be76%2F2f9g47cfeg0c%26cmr%251Bnalg%3Fel_WS%24aop'3%40aqsgt%2Fif%3D21%5D00a47c14-c559%2F4cff-%606d6%2F5f862d0g5382#/loginwall" style="--i:48">
-                    <span class="gl-art">
-                        <img src="png/games/fort.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Fortnite</h3>
-                </a>
-
-                <a class="gl-card" href="/games/gta3/" style="--i:49">
-                    <span class="gl-art">
-                        <img src="/png/games/gta3.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>GTA3</h3>
-                </a>
-
-                <a class="gl-card" href="/games/funmayhem/" style="--i:50">
-                    <span class="gl-art">
-                        <img src="/games/funmayhem/icon.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Gun Mayhem</h3>
-                </a>
-
-                <a class="gl-card" href="/games/jetpackjoyride/" style="--i:51">
-                    <span class="gl-art">
-                        <img src="/games/jetpackjoyride/logo.jpeg" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Jetpack Joyride</h3>
-                </a>
-
-                <a class="gl-card" href="/games/pizzatower/" style="--i:52">
-                    <span class="gl-art">
-                        <img src="/games/pizzatower/pz.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Pizza Tower</h3>
-                </a>
-
-                <a class="gl-card" href="/games/superhot/" style="--i:53">
-                    <span class="gl-art">
-                        <img src="/games/superhot/icon.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Superhot</h3>
-                </a>
-
-                <a class="gl-card" href="/games/tetris/" style="--i:54">
-                    <span class="gl-art">
-                        <img src="/games/tetris/icon.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Tetris</h3>
-                </a>
-
-                <a class="gl-card" href="/games/theimpossiblequiz/" style="--i:55">
-                    <span class="gl-art">
-                        <img src="/games/theimpossiblequiz/quiz.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>The Impossible Quiz</h3>
-                </a>
-
-                <a class="gl-card" href="/games/tombofthemask/index.html" style="--i:56">
-                    <span class="gl-art">
-                        <img src="/games/tombofthemask/cover.svg" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Tomb Of The Mask</h3>
-                </a>
-
-                <a class="gl-card" href="/games/vex/" style="--i:57">
-                    <span class="gl-art">
-                        <img src="/games/vex/icon.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Vex</h3>
-                </a>
-
-                <a class="gl-card" href="/games/watermelongame/" style="--i:58">
-                    <span class="gl-art">
-                        <img src="/games/watermelongame/melon.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Watermelon Game</h3>
-                </a>
-
-                <a class="gl-card" href="/games/n-gon/" style="--i:59">
-                    <span class="gl-art">
-                        <img src="/games/n-gon/bot.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>n-gon</h3>
-                </a>
-
-                <a class="gl-card" href="/games/getaway-shootout/" style="--i:60">
-                    <span class="gl-art">
-                        <img src="/games/getaway-shootout/img/index.jpg" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Getaway Shootout</h3>
-                </a>
-
-                <a class="gl-card" href="/games/fruitninja/" style="--i:61">
-                    <span class="gl-art">
-                        <img src="/games/fruitninja/FruitNinjaTeaser.jpg" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Fruit Ninja</h3>
-                </a>
-
-                <a class="gl-card" href="/games/learntofly2/" style="--i:62">
-                    <span class="gl-art">
-                        <img src="/games/learntofly2/learn-to-fly-2.jpg" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Learn To Fly 2</h3>
-                </a>
-
-                <a class="gl-card" href="/games/ltf3/" style="--i:63">
-                    <span class="gl-art">
-                        <img src="/games/ltf3/logo.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Learn To Fly 3</h3>
-                </a>
-
-                <a class="gl-card" href="/games/motox3m/" style="--i:64">
-                    <span class="gl-art">
-                        <img src="/games/motox3m/splash.jpg" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Moto X3M</h3>
-                </a>
-
-                <a class="gl-card" href="/games/paperio2/" style="--i:65">
-                    <span class="gl-art">
-                        <img src="/games/paperio2/paper.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Paperio 2</h3>
-                </a>
-
-                <a class="gl-card" href="/games/pixel-gun-survival/" style="--i:66">
-                    <span class="gl-art">
-                        <img src="/games/pixel-gun-survival/512x512.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Pixel Gun 3D</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-ilfknktg-arcfv.mre%2F" style="--i:67">
-                    <span class="gl-art">
-                        <img src="/png/games/inf.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Infinite Craft</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-fpoeigscraafe%2Cwkn-cmmrinef%2F%60uakqhmt%2Frmunevtg%2F" style="--i:68">
-                    <span class="gl-art">
-                        <img src="/png/games/buck.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Buckshot Roulette</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-sxv%7B.non%2F-eounavopjq%2Fmcxendc%2Fknfez.jtol" style="--i:69">
-                    <span class="gl-art">
-                        <img src="/png/games/zelda.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Zelda</h3>
-                </a>
-
-                <a class="gl-card" href="/static/uv/service/hvtrs8%2F-rganl%7Bcmonmctjaldnecrlilgdopkkdqaldqtwfd-wk%2Cvgraen.cpr%2Feaoeq%2Fraraqpkzxapic%2Fknfez.jtol" style="--i:70">
-                    <span class="gl-art">
-                        <img src="/png/games/pizza.png" alt="">
-                        <span class="gl-play">Play</span>
-                    </span>
-                    <h3>Papas Pizzeria</h3>
-                </a>
-
-            </div>
-
-            <!-- EMPTY -->
-            <div
-                class="gl-empty"
-                id="gl-empty"
-                hidden
-            >
-                <p>
-                    No games match
-                    "&ldquo;<span id="gl-term"></span>&rdquo;".
-                </p>
-
-                <a
-                    href="https://forms.gle/azBWo53JQN8VNzFt5"
-                    target="_blank"
-                    rel="noopener"
-                >
-                    Suggest this game
-                </a>
-            </div>
-
-        </main>
+        </div>
+
+        <!-- Count -->
+        <p class="gl-meta" id="gl-count" aria-live="polite"></p>
+
+        <!-- Game Grid -->
+        <div class="gl-grid" id="gameGallery">
+
+            <a class="gl-card" href="https://forms.gle/azBWo53JQN8VNzFt5" target="_blank" rel="noopener">
+                <span class="gl-art">
+                    <img src="/png/games/forms.png" alt="" loading="lazy">
+                    <span class="gl-play">Suggest</span>
+                </span>
+                <h3>Game Suggestions</h3>
+            </a>
+
+            <a class="gl-card" href="games/1">
+                <span class="gl-art">
+                    <img src="png/games/12.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>1</h3>
+            </a>
+
+            <a class="gl-card" href="games/1v1lol">
+                <span class="gl-art">
+                    <img src="png/games/1v1.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>1v1.lol</h3>
+            </a>
+
+            <a class="gl-card" href="games/2048">
+                <span class="gl-art">
+                    <img src="png/games/2048.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>2048</h3>
+            </a>
+
+            <a class="gl-card" href="games/ovo">
+                <span class="gl-art">
+                    <img src="/png/games/ovo.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>OvO</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-dgdpaeaoeq.aoo%2Feaoeq%2Fmvm2-0%2C2clrhc%2F">
+                <span class="gl-art">
+                    <img src="/png/games/ovo 2.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>OvO 2</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-mctjgcmgs46%2Cgktju%60.ko-gcmgs-hvmn5-oto1dkmgnqimnq%2F">
+                <span class="gl-art">
+                    <img src="/png/games/ovodi.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>OvO Dimensions</h3>
+            </a>
+
+            <a class="gl-card" href="games/slope">
+                <span class="gl-art">
+                    <img src="png/games/slope.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Slope</h3>
+            </a>
+
+            <a class="gl-card" href="games/retro-bowl">
+                <span class="gl-art">
+                    <img src="png/games/retro-bowl.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Retro Bowl</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-nmweg%2Clml-%3Flg%5Didp%5Dpcrvngr%3Fsioml">
+                <span class="gl-art">
+                    <img src="/png/games/rbx.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Roblox</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-a%2Fsoanl%2Fwmrndaur.eivhwb%2Cim%2Fdine-">
+                <span class="gl-art">
+                    <img src="png/games/samll.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>A Small World Cup</h3>
+            </a>
+
+            <a class="gl-card" href="games/sm64">
+                <span class="gl-art">
+                    <img src="png/games/sm64.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>SM64</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-ivstiha%7Bskneh%2Cgktju%60.ko-Slou-Pifep3F%2F">
+                <span class="gl-art">
+                    <img src="png/games/snow.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Snow Rider 3D</h3>
+            </a>
+
+            <a class="gl-card" href="games/soccer-random">
+                <span class="gl-art">
+                    <img src="png/games/soccer.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Soccer Random</h3>
+            </a>
+
+            <a class="gl-card" href="/games/baldis-basics/index.html">
+                <span class="gl-art">
+                    <img src="/games/baldis-basics/splash.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Baldis Basics</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-sjenlqhmci.ko-">
+                <span class="gl-art">
+                    <img src="png/games/shell.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Shell Shockers</h3>
+            </a>
+
+            <a class="gl-card" href="games/tiny-fishing">
+                <span class="gl-art">
+                    <img src="png/games/tiny.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Tiny Fishing</h3>
+            </a>
+
+            <a class="gl-card" href="games/worlds-hardest-game">
+                <span class="gl-art">
+                    <img src="png/games/world.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Worlds Hardest Game</h3>
+            </a>
+
+            <a class="gl-card" href="games/MonkeyMart">
+                <span class="gl-art">
+                    <img src="png/games/monkey.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Monkey Mart</h3>
+            </a>
+
+            <a class="gl-card" href="games/idle-breakout">
+                <span class="gl-art">
+                    <img src="png/games/idle.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Idle Breakout</h3>
+            </a>
+
+            <a class="gl-card" href="games/Rocket-League">
+                <span class="gl-art">
+                    <img src="png/games/rocket.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Rocket League</h3>
+            </a>
+
+            <a class="gl-card" href="games/a-dance-of-fire-and-ice">
+                <span class="gl-art">
+                    <img src="png/games/adofai.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>ADOFAI</h3>
+            </a>
+
+            <a class="gl-card" href="games/basket-random">
+                <span class="gl-art">
+                    <img src="png/games/basket.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Basket Random</h3>
+            </a>
+
+            <a class="gl-card" href="games/bitlife">
+                <span class="gl-art">
+                    <img src="png/games/bit.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Bitlife</h3>
+            </a>
+
+            <a class="gl-card" href="games/bloonstd">
+                <span class="gl-art">
+                    <img src="png/games/bloons.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Bloon TD1</h3>
+            </a>
+
+            <a class="gl-card" href="games/btd5">
+                <span class="gl-art">
+                    <img src="png/games/bloons5.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Bloons TD5</h3>
+            </a>
+
+            <a class="gl-card" href="games/cookie-clicker">
+                <span class="gl-art">
+                    <img src="png/games/cookie.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Cookie Clicker</h3>
+            </a>
+
+            <a class="gl-card" href="games/eggycar">
+                <span class="gl-art">
+                    <img src="png/games/eggy-car.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Eggy Car</h3>
+            </a>
+
+            <a class="gl-card" href="games/fnaf/">
+                <span class="gl-art">
+                    <img src="png/games/splash.jpg" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>FNAF</h3>
+            </a>
+
+            <a class="gl-card" href="games/ducklife1/">
+                <span class="gl-art">
+                    <img src="png/games/ducklife.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Duck Life 1</h3>
+            </a>
+
+            <a class="gl-card" href="games/rbcollege">
+                <span class="gl-art">
+                    <img src="png/games/rbc.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Retro Bowl College</h3>
+            </a>
+
+            <a class="gl-card" href="games/csgo-clicker">
+                <span class="gl-art">
+                    <img src="png/games/csgo.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Csgo Clicker</h3>
+            </a>
+
+            <a class="gl-card" href="games/death-run-3d">
+                <span class="gl-art">
+                    <img src="png/games/death.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Death Run 3D</h3>
+            </a>
+
+            <a class="gl-card" href="games/drift-boss">
+                <span class="gl-art">
+                    <img src="png/games/drift.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Drift Boss</h3>
+            </a>
+
+            <a class="gl-card" href="games/drive-mad">
+                <span class="gl-art">
+                    <img src="png/games/drive.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Drive Mad</h3>
+            </a>
+
+            <a class="gl-card" href="games/minecraft-15">
+                <span class="gl-art">
+                    <img src="png/games/mine15.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Minecraft 1.5</h3>
+            </a>
+
+            <a class="gl-card" href="games/learntofly">
+                <span class="gl-art">
+                    <img src="png/games/learn.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Learn To Fly</h3>
+            </a>
+
+            <a class="gl-card" href="games/minecraft-18">
+                <span class="gl-art">
+                    <img src="png/games/mine18.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Minecraft 1.8</h3>
+            </a>
+
+            <a class="gl-card" href="games/run">
+                <span class="gl-art">
+                    <img src="png/games/run.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Run</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-soaqhiaptq.ko-">
+                <span class="gl-art">
+                    <img src="png/games/smash.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Smash Karts</h3>
+            </a>
+
+            <a class="gl-card" href="games/drift-hunters">
+                <span class="gl-art">
+                    <img src="png/games/hunt.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Drift Hunter</h3>
+            </a>
+
+            <a class="gl-card" href="games/osu!">
+                <span class="gl-art">
+                    <img src="/png/games/osu!.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Osu!</h3>
+            </a>
+
+            <a class="gl-card" href="games/stickman-hook">
+                <span class="gl-art">
+                    <img src="png/games/stickman.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Stickman Hook</h3>
+            </a>
+
+            <a class="gl-card" href="games/riddleschool">
+                <span class="gl-art">
+                    <img src="png/games/riddle.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Riddle School</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-bnoak%2Fbnaqt%2Cim%2Feaoe-bnoak%2Fbnaqt-">
+                <span class="gl-art">
+                    <img src="png/games/bb.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Block Blast</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-gcmgs%2Fcfn%2Csxv%7B.ws%2Cke%2Frrmjgcvs-cvr-">
+                <span class="gl-art">
+                    <img src="png/games/ctr.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Cut The Rope</h3>
+            </a>
+
+            <a class="gl-card" href="games/subway-surfers/">
+                <span class="gl-art">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfyjATFe7Qg15j5x1YktUbABxgr6BlbKXKECbj6KH2QzbgKqzw" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Subway Surfers</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-arp%2F370382.eaoeq.q3%2Cycnfez.lev%2F1521%3A0-oqpisvu60c8pttgaah1h61pukvlnxpg3%2Fknfez.jtol%3Dcnif%3D6466197%26cmr%3Bi52if%3D'7A%26cmr%3Beaf_qowrae%3F1%24aop9sfk%3F%250Fqdi%250F%5D%250Ft2%2C6195cf82c4dg64c2347f.hs!opieil%3Djtvpq%251A'2D%250Frlcyjor.aoo%26cmr%3Bcpr-kd%3F370382%26cmr%3Bfetiae%2Ft%7Bpg%3Dfeqkvor">
+                <span class="gl-art">
+                    <img src="https://play-lh.googleusercontent.com/45HfPjWkdT8k1Y-1kb2ce9dtU4cIq4PXZGPSOQDBHRO_sBWG7Fu9mKKsk9WylHW1Lg=w240-h480-rw" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Thorns &amp; Balloons</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-pna%7B.eedopcgnmw%2Ccmm-mcln%2F!%2Ffegpnilk%3Dgcmg-kd%3F44bda%6004-f844%2F445f-%3Be76%2F2f9g47cfeg0c%26cmr%251Bnalg%3Fel_WS%24aop'3%40aqsgt%2Fif%3D21%5D00a47c14-c559%2F4cff-%606d6%2F5f862d0g5382#/loginwall">
+                <span class="gl-art">
+                    <img src="png/games/fort.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Fortnite</h3>
+            </a>
+
+            <a class="gl-card" href="/games/gta3/">
+                <span class="gl-art">
+                    <img src="/png/games/gta3.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>GTA3</h3>
+            </a>
+
+            <a class="gl-card" href="/games/funmayhem/">
+                <span class="gl-art">
+                    <img src="/games/funmayhem/icon.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Gun Mayhem</h3>
+            </a>
+
+            <a class="gl-card" href="/games/jetpackjoyride/">
+                <span class="gl-art">
+                    <img src="/games/jetpackjoyride/logo.jpeg" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Jetpack Joyride</h3>
+            </a>
+
+            <a class="gl-card" href="/games/pizzatower/">
+                <span class="gl-art">
+                    <img src="/games/pizzatower/pz.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Pizza Tower</h3>
+            </a>
+
+            <a class="gl-card" href="/games/superhot/">
+                <span class="gl-art">
+                    <img src="/games/superhot/icon.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Superhot</h3>
+            </a>
+
+            <a class="gl-card" href="/games/tetris/">
+                <span class="gl-art">
+                    <img src="/games/tetris/icon.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Tetris</h3>
+            </a>
+
+            <a class="gl-card" href="/games/theimpossiblequiz/">
+                <span class="gl-art">
+                    <img src="/games/theimpossiblequiz/quiz.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>The Impossible Quiz</h3>
+            </a>
+
+            <a class="gl-card" href="/games/tombofthemask/index.html">
+                <span class="gl-art">
+                    <img src="/games/tombofthemask/cover.svg" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Tomb Of The Mask</h3>
+            </a>
+
+            <a class="gl-card" href="/games/vex/">
+                <span class="gl-art">
+                    <img src="/games/vex/icon.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Vex</h3>
+            </a>
+
+            <a class="gl-card" href="/games/watermelongame/">
+                <span class="gl-art">
+                    <img src="/games/watermelongame/melon.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Watermelon Game</h3>
+            </a>
+
+            <a class="gl-card" href="/games/n-gon/">
+                <span class="gl-art">
+                    <img src="/games/n-gon/bot.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>n-gon</h3>
+            </a>
+
+            <a class="gl-card" href="/games/getaway-shootout/">
+                <span class="gl-art">
+                    <img src="/games/getaway-shootout/img/index.jpg" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Getaway Shootout</h3>
+            </a>
+
+            <a class="gl-card" href="/games/fruitninja/">
+                <span class="gl-art">
+                    <img src="/games/fruitninja/FruitNinjaTeaser.jpg" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Fruit Ninja</h3>
+            </a>
+
+            <a class="gl-card" href="/games/learntofly2/">
+                <span class="gl-art">
+                    <img src="/games/learntofly2/learn-to-fly-2.jpg" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Learn To Fly 2</h3>
+            </a>
+
+            <a class="gl-card" href="/games/ltf3/">
+                <span class="gl-art">
+                    <img src="/games/ltf3/logo.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Learn To Fly 3</h3>
+            </a>
+
+            <a class="gl-card" href="/games/motox3m/">
+                <span class="gl-art">
+                    <img src="/games/motox3m/splash.jpg" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Moto X3M</h3>
+            </a>
+
+            <a class="gl-card" href="/games/paperio2/">
+                <span class="gl-art">
+                    <img src="/games/paperio2/paper.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Paperio 2</h3>
+            </a>
+
+            <a class="gl-card" href="/games/pixel-gun-survival/">
+                <span class="gl-art">
+                    <img src="/games/pixel-gun-survival/512x512.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Pixel Gun 3D</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-ilfknktg-arcfv.mre%2F">
+                <span class="gl-art">
+                    <img src="/png/games/inf.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Infinite Craft</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-fpoeigscraafe%2Cwkn-cmmrinef%2F%60uakqhmt%2Frmunevtg%2F">
+                <span class="gl-art">
+                    <img src="/png/games/buck.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Buckshot Roulette</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-sxv%7B.non%2F-eounavopjq%2Fmcxendc%2Fknfez.jtol">
+                <span class="gl-art">
+                    <img src="/png/games/zelda.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Zelda</h3>
+            </a>
+
+            <a class="gl-card" href="/static/uv/service/hvtrs8%2F-rganl%7Bcmonmctjaldnecrlilgdopkkdqaldqtwfd-wk%2Cvgraen.cpr%2Feaoeq%2Fraraqpkzxapic%2Fknfez.jtol">
+                <span class="gl-art">
+                    <img src="/png/games/pizza.png" alt="">
+                    <span class="gl-play">Play</span>
+                </span>
+                <h3>Papas Pizzeria</h3>
+            </a>
+
+        </div>
+
+        <!-- Empty State -->
+        <div class="gl-empty" id="gl-empty" hidden>
+            <p>No games match "<span id="gl-term"></span>".</p>
+            <a href="https://forms.gle/azBWo53JQN8VNzFt5" target="_blank" rel="noopener">Suggest this game</a>
+        </div>
 
     </div>
 
-    <!-- IMPORTED GAMES -->
-    <script src="/js/imported-games.js"></script>
+    <!-- Loading Script -->
+    <script src="/loading.js"></script>
 
-    <!-- JQUERY -->
-    <script
-        src="https://code.jquery.com/jquery-3.6.0.min.js">
-    </script>
-
-    <!-- GAME SEARCH -->
+    <!-- Loading Screen Handler -->
     <script>
-        (function () {
-
-            var input =
-                document.getElementById("gamesearch");
-
-            var box =
-                document.getElementById("gl-search");
-
-            var clear =
-                document.getElementById("gl-clear");
-
-            var count =
-                document.getElementById("gl-count");
-
-            var empty =
-                document.getElementById("gl-empty");
-
-            var term =
-                document.getElementById("gl-term");
-
-            var grid =
-                document.getElementById("gameGallery");
-
-            var cards =
-                Array.prototype.slice.call(
-                    grid.children
-                );
-
-            var names =
-                cards.map(function (card) {
-
-                    return card
-                        .querySelector("h3")
-                        .textContent
-                        .toLowerCase();
-
-                });
-
-            function searchGames() {
-
-                var q =
-                    input.value
-                        .trim()
-                        .toLowerCase();
-
-                var shown = 0;
-
-                cards.forEach(function (card, i) {
-
-                    var show =
-                        !q ||
-                        names[i].indexOf(q) !== -1;
-
-                    card.hidden = !show;
-
-                    if (show) {
-                        shown++;
-                    }
-
-                });
-
-                box.classList.toggle(
-                    "has-text",
-                    !!input.value
-                );
-
-                clear.hidden =
-                    !input.value;
-
-                empty.hidden =
-                    shown > 0;
-
-                term.textContent =
-                    input.value.trim();
-
-                count.textContent =
-                    q
-                        ? shown +
-                          " of " +
-                          cards.length +
-                          " games"
-                        : cards.length +
-                          " games";
+        (function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                setTimeout(() => {
+                    loadingScreen.classList.add('hidden');
+                }, 700);
             }
-
-            input.addEventListener(
-                "input",
-                searchGames
-            );
-
-            clear.addEventListener(
-                "click",
-                function () {
-
-                    input.value = "";
-
-                    searchGames();
-
-                    input.focus();
-
-                }
-            );
-
-            input.addEventListener(
-                "keydown",
-                function (e) {
-
-                    if (e.key === "Escape") {
-
-                        input.value = "";
-
-                        searchGames();
-
-                    }
-
-                }
-            );
-
-            document.addEventListener(
-                "keydown",
-                function (e) {
-
-                    var tag =
-                        (
-                            e.target.tagName || ""
-                        ).toLowerCase();
-
-                    if (
-                        e.key === "/" &&
-                        tag !== "input" &&
-                        tag !== "textarea" &&
-                        !e.ctrlKey &&
-                        !e.metaKey
-                    ) {
-
-                        e.preventDefault();
-
-                        input.focus();
-
-                    }
-
-                }
-            );
-
-            var params =
-                new URLSearchParams(
-                    window.location.search
-                );
-
-            var q =
-                params.get("q");
-
-            if (q) {
-
-                input.value = q;
-
-                window.history.replaceState(
-                    {},
-                    document.title,
-                    location.pathname
-                );
-
-            }
-
-            searchGames();
-
         })();
     </script>
 
-    <!-- LOADING -->
-    <script src="/loading.js"></script>
-
-    <!-- GOOGLE ANALYTICS -->
-    <script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-WLTG1S4STB">
-    </script>
-
-    <script>
-        window.dataLayer =
-            window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag("js", new Date());
-
-        gtag(
-            "config",
-            "G-WLTG1S4STB"
-        );
-    </script>
-
-    <!-- FARIUS PARTICLES -->
+    <!-- Search Filter Script -->
+    <script src="/js/imported-games.js"></script>
     <script>
         (function () {
+            var input = document.getElementById("gamesearch");
+            var count = document.getElementById("gl-count");
+            var empty = document.getElementById("gl-empty");
+            var term = document.getElementById("gl-term");
+            var grid = document.getElementById("gameGallery");
 
-            const container =
-                document.getElementById("particles");
+            if (!input || !grid) return;
 
-            if (!container) return;
+            var cards = Array.prototype.slice.call(grid.children);
+            var names = cards.map(function (card) {
+                var h3 = card.querySelector("h3");
+                return h3 ? h3.textContent.toLowerCase() : "";
+            });
 
-            const count =
-                window.innerWidth < 700
-                    ? 14
-                    : 26;
+            function searchGames() {
+                var q = input.value.trim().toLowerCase();
+                var shown = 0;
 
-            for (
-                let i = 0;
-                i < count;
-                i++
-            ) {
+                cards.forEach(function (card, i) {
+                    var show = !q || names[i].indexOf(q) !== -1;
+                    card.style.display = show ? "" : "none";
+                    if (show) shown++;
+                });
 
-                const particle =
-                    document.createElement("span");
-
-                particle.className =
-                    "farius-particle";
-
-                const size =
-                    2 + Math.random() * 3;
-
-                particle.style.width =
-                    size + "px";
-
-                particle.style.height =
-                    size + "px";
-
-                particle.style.left =
-                    Math.random() * 100 + "%";
-
-                particle.style.animationDuration =
-                    7 + Math.random() * 9 + "s";
-
-                particle.style.animationDelay =
-                    -Math.random() * 12 + "s";
-
-                container.appendChild(
-                    particle
-                );
+                if (empty) empty.hidden = shown > 0;
+                if (term) term.textContent = input.value.trim();
+                if (count) {
+                    count.textContent = q
+                        ? shown + " of " + cards.length + " games"
+                        : cards.length + " games";
+                }
             }
 
+            input.addEventListener("input", searchGames);
+
+            document.addEventListener("keydown", function (e) {
+                var tag = (e.target.tagName || "").toLowerCase();
+                if (e.key === "/" && tag !== "input" && tag !== "textarea" && !e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    input.focus();
+                }
+            });
+
+            var params = new URLSearchParams(window.location.search);
+            var q = params.get("q");
+            if (q) {
+                input.value = q;
+                window.history.replaceState({}, document.title, location.pathname);
+            }
+
+            searchGames();
         })();
     </script>
 
