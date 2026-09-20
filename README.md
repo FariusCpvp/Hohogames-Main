@@ -1,6 +1,6 @@
-# Truffled
+# Farius
 
-the better unblocked games site
+An unblocked games site made by HOHOGAMES.
 
 ## Deploying
 
@@ -25,4 +25,4 @@ use any static hosting provider or click a button below!! <br>
 * [szvy](https://github.com/szvy) - other developer, made the truffled account, also emotional support
 
 ## License
-truffled is under the MIT License. read more [here](https://choosealicense.com/licenses/mit/)
+Farius is under the MIT License. Read more [here](https://choosealicense.com/licenses/mit/).
