@@ -1,21 +1,30 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/socket.js",
+      "use": "@vercel/node"
+    }
+  ],
   "rewrites": [
+    { "source": "/api/socket.io/(.*)", "destination": "/api/socket" },
+    { "source": "/socket.io/(.*)", "destination": "/api/socket" },
+    { "source": "/api/(.*)", "destination": "/api/index" },
+    { "source": "/uploads/(.*)", "destination": "/api/index" },
+    { "source": "/stickers/(.*)", "destination": "/api/index" }
+  ],
+  "headers": [
     {
-      "source": "/socket.io/(.*)",
-      "destination": "/api/socket"
-    },
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/index"
-    },
-    {
-      "source": "/uploads/(.*)",
-      "destination": "/api/index"
-    },
-    {
-      "source": "/stickers/(.*)",
-      "destination": "/api/index"
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,OPTIONS,DELETE" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, x-admin-token" }
+      ]
     }
   ]
 }

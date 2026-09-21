@@ -1,4 +1,8 @@
 {
-  "HOHOGAMES": [],
-  "Farius": []
+  "HOHOGAMES": [
+    "Farius"
+  ],
+  "Farius": [
+    "HOHOGAMES"
+  ]
 }
