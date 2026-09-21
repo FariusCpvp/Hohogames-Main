@@ -1,42 +1,7 @@
-cat > vercel.json <<'EOF'
 {
   "version": 2,
   "rewrites": [
-    {
-      "source": "/socket.io/(.*)",
-      "destination": "/api/socket"
-    },
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/index"
-    },
-    {
-      "source": "/uploads/(.*)",
-      "destination": "/api/index"
-    },
-    {
-      "source": "/stickers/(.*)",
-      "destination": "/api/index"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET,POST,OPTIONS,DELETE"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, x-admin-token"
-        }
-      ]
-    }
+    { "source": "/socket.io/(.*)", "destination": "/api/socket" },
+    { "source": "/api/(.*)", "destination": "/api/index" }
   ]
 }
-EOF
